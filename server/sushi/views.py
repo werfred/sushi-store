@@ -20,16 +20,6 @@ def sushi_detail(request, pk):
         serializer = SushiSerializer(sushi, context={'request': request})
         return Response(serializer.data)
 
-    # elif request.method == 'PUT':
-    #     serializer = SushiSerializer(sushi, data=request.data,context={'request': request})
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # elif request.method == 'DELETE':
-    #     sushi.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET'])
 def sushi_list(request):

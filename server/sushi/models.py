@@ -2,7 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Sushi(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
+    category = models.CharField(null=False, max_length=100)
+    image = models.ImageField(upload_to ='img/', null=True)
     description = models.TextField(default='')
     quantity = models.PositiveSmallIntegerField(default=1)
     price = models.DecimalField(default=0.0, max_digits=6, decimal_places=2)
@@ -14,9 +16,18 @@ class Sushi(models.Model):
         else:
             return False
 
-
     def __str__(self) -> str:
         return self.name
 
     class Meta:
         verbose_name_plural = "Sushi"
+
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.category_name
+
+    class Meta:
+        verbose_name_plural = "Categories"
