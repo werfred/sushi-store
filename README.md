@@ -1,16 +1,26 @@
-To install all dependencies type:
-    `pip install -r requirements.txt`
+###Sushi store
 
-To start backend server type:
-    `cd sushi_store`
-    `python manage.py runserver`
+##Project setup
 
-To start frontend type:
-    `cd frontend`
-    `npm start`
+1) clone repo
+2) python -m venv venv
+3) venv/Scripts/activate
+4) pip install -r requirements.txt
 
-To enter django administration follow the link: http://127.0.0.1:8000/admin and login with admin:admin
+##Starting migrations
 
-To view all products follow the link: http://127.0.0.1:8000/sushi
+5) `cd server` `python manage.py migrate`
 
-To view a certain product by its id, follow the link: http://127.0.0.1:8000/sushi/ + id
+##Project run
+
+6) Run the client:
+`cd client` `npm install` `npm start`
+
+7) Run the server:
+   `cd server` `python manage.py runserver`
+   
+##ADMIN credentials
+   
+To enter django administration follow the link: 
+http://127.0.0.1:8000/admin and login with `admin`:`admin`
+
