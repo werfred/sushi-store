@@ -14,7 +14,7 @@
 ## Project run
 
 6. Run the client:
-`cd client` `npm install` `npm start`
+`cd client` `npm install` `npm run dev`
 
 7. Run the server:
    `cd server` `python manage.py runserver`
