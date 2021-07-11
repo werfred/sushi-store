@@ -29,7 +29,7 @@ def sushi_list(request):
         previousPage = 1
         sushi = Sushi.objects.all()
         page = request.GET.get('page', 1)
-        paginator = Paginator(sushi, 5)
+        paginator = Paginator(sushi, 12)
         try:
             data = paginator.page(page)
         except PageNotAnInteger:

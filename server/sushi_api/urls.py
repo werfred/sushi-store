@@ -5,6 +5,6 @@ from . import views
 application_name = 'sushi_api'
 
 urlpatterns = [
-    path('', views.sushi_list),
+    path('sushi', views.sushi_list),
     path('<int:pk>', views.sushi_detail),
 ]
