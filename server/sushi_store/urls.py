@@ -20,6 +20,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+admin.site.site_header = 'Sushi shop administration'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/sushi/', include('sushi_api.urls')),
