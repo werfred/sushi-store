@@ -70,7 +70,7 @@ class Address(models.Model):
     housing_number = models.CharField(max_length=10, blank=True, null=True)
     apartment_number = models.CharField(max_length=10, blank=True, null=True)
     floor_number = models.CharField(max_length=10, blank=True, null=True)
-    user = models.ForeignKey(CustomerUser, on_delete=CASCADE)
+    user = models.ForeignKey(CustomerUser, on_delete=CASCADE, related_name='addresses')
 
     def __str__(self) -> str:
         return f'{self.street_name}, {self.street_number}'
