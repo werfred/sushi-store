@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.db.models.deletion import CASCADE
 from phonenumber_field.modelfields import PhoneNumberField
 from sushi.models import Sushi
+from rest_framework_simplejwt.tokens import OutstandingToken
 
 
 class AccountManager(BaseUserManager):
@@ -36,6 +37,13 @@ class AccountManager(BaseUserManager):
         
         return self.create_user(email, first_name, last_name, phone_number, password, **other_fields)
 
+    def BE_AWARE_NO_WARNING_clear_tokens_and_delete(self, request, queryset):
+        users = queryset.values("id")
+        OutstandingToken.objects.filter(user__id__in=users).delete()
+        queryset.delete()
+
+    actions = ["BE_AWARE_NO_WARNING_clear_tokens_and_delete"]
+
 
 class CustomerUser(AbstractBaseUser, PermissionsMixin):
 
@@ -46,14 +54,15 @@ class CustomerUser(AbstractBaseUser, PermissionsMixin):
     phone_number = PhoneNumberField(null=False, blank=False, unique=True)
     start_date = models.DateTimeField(auto_now=True)
 
+    is_email_confirmed = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     objects = AccountManager()
 
     USERNAME_FIELD = 'email'
 
-    REQUIRED_FIELDS = ['phone_number', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['phone_number', 'first_name', 'last_name', 'phone_number']
 
     def __str__(self) -> str:
         return f'{self.last_name} {self.first_name} {self.patronymic}'
