@@ -12,6 +12,16 @@ from django.core.mail import EmailMessage
 from user.models import CustomerUser
 
 
+def send_confirmation_email(request, user):
+    current_site = get_current_site(request)
+    mail_subject = 'Activate your sushi shop account.'
+    message = f'http://{ current_site.domain }/api/user/activate/{ urlsafe_base64_encode(force_bytes(user.pk)) }/{ account_activation_token.make_token(user) }'
+    email = EmailMessage(
+        mail_subject, message, to=[user.email]
+    )
+    email.send()
+
+
 class UserManageView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -37,14 +47,7 @@ class UserCreateView(APIView):
         if reg_serializer.is_valid():
             user = reg_serializer.save()
             if user:
-                current_site = get_current_site(request)
-                mail_subject = 'Activate your sushi shop account.'
-                print(urlsafe_base64_encode(force_bytes(user.pk)))
-                message = f'http://{ current_site.domain }/api/user/activate/{ urlsafe_base64_encode(force_bytes(user.pk)) }/{ account_activation_token.make_token(user) }'
-                email = EmailMessage(
-                    mail_subject, message, to=[user.email]
-                )
-                email.send()
+                send_confirmation_email(request, user)
                 return Response(status=status.HTTP_201_CREATED)
         return Response(reg_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

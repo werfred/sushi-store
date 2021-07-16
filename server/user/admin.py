@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import CustomerUser, Address
 from django.contrib.auth.admin import UserAdmin
+from rest_framework_simplejwt.tokens import OutstandingToken
 
 
 class AddressInline(admin.StackedInline):
@@ -17,7 +18,9 @@ class AddressInline(admin.StackedInline):
 
 
 class UserAdminConfig(UserAdmin):
+
     model = CustomerUser
+
     search_fields = ('email', 'last_name', 'first_name', 'phone_number')
     list_filter = ('email', 'last_name', 'first_name', 'phone_number', 'is_staff')
     ordering = ('-start_date',)
@@ -42,4 +45,25 @@ class UserAdminConfig(UserAdmin):
         return str(obj)
 
 
+class OutstandingTokenModelAdmin(admin.ModelAdmin):
+
+    def check_perm(self, user_obj):
+        if not user_obj.is_active or user_obj.is_anonymous:
+            return False
+        if user_obj.is_superuser or user_obj.is_staff:
+            return True
+        return False
+
+    def has_view_permission(self, request, obj=None):
+        return self.check_perm(request.user)
+
+    def has_delete_permission(self, request, obj=None):
+        return self.check_perm(request.user)
+
+    def has_module_permission(self, request):
+        return self.check_perm(request.user)
+
+
+admin.site.unregister(OutstandingToken)
+admin.site.register(OutstandingToken, OutstandingTokenModelAdmin)
 admin.site.register(CustomerUser, UserAdminConfig)

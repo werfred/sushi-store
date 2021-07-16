@@ -37,13 +37,6 @@ class AccountManager(BaseUserManager):
         
         return self.create_user(email, first_name, last_name, phone_number, password, **other_fields)
 
-    def BE_AWARE_NO_WARNING_clear_tokens_and_delete(self, request, queryset):
-        users = queryset.values("id")
-        OutstandingToken.objects.filter(user__id__in=users).delete()
-        queryset.delete()
-
-    actions = ["BE_AWARE_NO_WARNING_clear_tokens_and_delete"]
-
 
 class CustomerUser(AbstractBaseUser, PermissionsMixin):
 
@@ -66,6 +59,7 @@ class CustomerUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self) -> str:
         return f'{self.last_name} {self.first_name} {self.patronymic}'
+
 
     class Meta:
         verbose_name_plural = "Users"
