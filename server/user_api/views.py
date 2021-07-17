@@ -10,6 +10,7 @@ from user.models import CustomerUser
 from cryptography.fernet import Fernet
 from django.conf import settings
 import jwt
+import datetime
 
 
 def int_to_bytes(x: int) -> bytes:
@@ -21,7 +22,7 @@ def int_from_bytes(xbytes: bytes) -> int:
 
 
 def send_confirmation_email(request, user):
-    cipher_suite = Fernet(settings.FERNET_KEY)
+    cipher_suite = Fernet(settings.FERNET_KEY_EMAIL)
     encoded_user_id = cipher_suite.encrypt(int_to_bytes(user.pk))
     token = jwt.encode({"user_id": encoded_user_id.decode("utf-8")}, settings.SECRET_KEY, algorithm="HS256")
     current_site = get_current_site(request)
@@ -31,7 +32,7 @@ def send_confirmation_email(request, user):
         mail_subject, message, to=[user.email]
     )
     email.send()
-
+    
 
 class UserManageView(APIView):
     permission_classes = [IsAuthenticated]
@@ -64,10 +65,11 @@ class UserCreateView(APIView):
 
 
 class ActivationView(APIView):
+    permission_classes = [AllowAny]
 
     def get(self, request, token):
+        cipher_suite = Fernet(settings.FERNET_KEY_EMAIL)
         try:
-            cipher_suite = Fernet(settings.FERNET_KEY)
             decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             user = CustomerUser.objects.get(pk=int_from_bytes(cipher_suite.decrypt(str.encode(decoded_token['user_id']))))
         except:
@@ -81,6 +83,63 @@ class ActivationView(APIView):
                 return Response('Your account is already activated.', status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response('Activation link is invalid!', status=status.HTTP_404_NOT_FOUND)
+
+
+class ResetPasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, token):
+        cipher_suite = Fernet(settings.FERNET_KEY_PASSWORD)
+        try:
+            decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            expire_date = datetime.datetime.fromtimestamp(decoded_token['expire_date'])
+            user = CustomerUser.objects.get(pk=int_from_bytes(cipher_suite.decrypt(str.encode(decoded_token['user_id']))))
+        except:
+            user = None
+        if user and expire_date > datetime.datetime.now() and user.is_email_confirmed:
+            return Response('ok', status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request):
+        cipher_suite = Fernet(settings.FERNET_KEY_PASSWORD)
+        try:
+            email = request.POST.get('email')
+            user = CustomerUser.objects.get(email=email)
+            encoded_user_id = cipher_suite.encrypt(int_to_bytes(user.pk))
+            token = jwt.encode({"user_id": encoded_user_id.decode("utf-8"), 
+                                "expire_date": (datetime.datetime.now() + datetime.timedelta(hours=4)).timestamp()}, 
+                                settings.SECRET_KEY, algorithm="HS256")
+            current_site = get_current_site(request)
+            mail_subject = 'Password reset.'
+            message = f'http://{ current_site.domain }/api/user/reset/password/{ token }'
+            email = EmailMessage(
+                mail_subject, message, to=[user.email]
+            )
+            email.send()
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(status=status.HTTP_200_OK)
+
+    def put(self, request, token):
+        cipher_suite = Fernet(settings.FERNET_KEY_PASSWORD)
+        try:
+            password = request.data.get('password')
+            decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            expire_date = datetime.datetime.fromtimestamp(decoded_token['expire_date'])
+            user = CustomerUser.objects.get(pk=int_from_bytes(cipher_suite.decrypt(str.encode(decoded_token['user_id']))))
+        except:
+            user = None
+        if user and expire_date > datetime.datetime.now() and user.is_email_confirmed:
+            user.set_password(password)
+            user.save()
+            if user.check_password(password):
+                return Response('Password has been changed.', status=status.HTTP_200_OK)
+            else:
+                return Response('Password has not been changed.', status=status.HTTP_304_NOT_MODIFIED)
+        else:
+            return Response('Invalid data. Password has not been changed.', status=status.HTTP_400_BAD_REQUEST)
 
 
 class BlacklistTokenUpdateView(APIView):

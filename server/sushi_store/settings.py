@@ -22,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-*5gw5q^9#oghyhwyj+-w6c-8+lfakd&cpl!#3y%dld%4*@2l0m'
-FERNET_KEY = b'H29IHCVYs4kjRX6H91mmsu0zUY9yq2LRwGlXuikatRA='
+FERNET_KEY_EMAIL = b'H29IHCVYs4kjRX6H91mmsu0zUY9yq2LRwGlXuikatRA='
+FERNET_KEY_PASSWORD = b'Yyg0uXRuIuUAGxqz8SyzO1fjhANVhxPVloOPnZcSOvE='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
