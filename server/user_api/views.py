@@ -5,17 +5,28 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from user.models import CustomerUser
+from cryptography.fernet import Fernet
+from django.conf import settings
+import jwt
+
+
+def int_to_bytes(x: int) -> bytes:
+    return x.to_bytes((x.bit_length() + 7) // 8, 'big')
+
+
+def int_from_bytes(xbytes: bytes) -> int:
+    return int.from_bytes(xbytes, 'big')
 
 
 def send_confirmation_email(request, user):
+    cipher_suite = Fernet(settings.FERNET_KEY)
+    encoded_user_id = cipher_suite.encrypt(int_to_bytes(user.pk))
+    token = jwt.encode({"user_id": encoded_user_id.decode("utf-8")}, settings.SECRET_KEY, algorithm="HS256")
     current_site = get_current_site(request)
     mail_subject = 'Activate your sushi shop account.'
-    message = f'http://{ current_site.domain }/api/user/activate/{ urlsafe_base64_encode(force_bytes(user.pk)) }/{ account_activation_token.make_token(user) }'
+    message = f'http://{ current_site.domain }/api/user/activate/{ token }'
     email = EmailMessage(
         mail_subject, message, to=[user.email]
     )
@@ -54,18 +65,22 @@ class UserCreateView(APIView):
 
 class ActivationView(APIView):
 
-    def get(self, request, uidb64, token):
+    def get(self, request, token):
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
-            user = CustomerUser.objects.get(pk=uid)
-        except(TypeError, ValueError, OverflowError, CustomerUser.DoesNotExist):
+            cipher_suite = Fernet(settings.FERNET_KEY)
+            decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            user = CustomerUser.objects.get(pk=int_from_bytes(cipher_suite.decrypt(str.encode(decoded_token['user_id']))))
+        except:
             user = None
-        if user is not None and account_activation_token.check_token(user, token):
-            user.is_email_confirmed = True
-            user.save()
-            return Response('Thank you for your email confirmation. Now you can login your account.', status=status.HTTP_200_OK)
+        if user is not None:
+            if not user.is_email_confirmed:
+                user.is_email_confirmed = True
+                user.save()
+                return Response('Thank you for your email confirmation. Now you can login your account.', status=status.HTTP_200_OK)
+            else:
+                return Response('Your account is already activated.', status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response('Activation link is invalid!', status=status.HTTP_400_BAD_REQUEST)
+            return Response('Activation link is invalid!', status=status.HTTP_404_NOT_FOUND)
 
 
 class BlacklistTokenUpdateView(APIView):
