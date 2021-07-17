@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.db.models.deletion import CASCADE
 from phonenumber_field.modelfields import PhoneNumberField
 from sushi.models import Sushi
-from rest_framework_simplejwt.tokens import OutstandingToken
 
 
 class AccountManager(BaseUserManager):
