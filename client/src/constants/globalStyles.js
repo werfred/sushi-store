@@ -50,7 +50,7 @@ export const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
     position: relative;
     color: var(--color-text);
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     line-height: 1.2;
 

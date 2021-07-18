@@ -12,7 +12,7 @@ const Seo = (props) => {
 }
 
 Seo.defaultProps = {
-  title: 'Sushi store',
+  title: 'Sushi Store',
   description: 'The best sushi store',
 }
 
