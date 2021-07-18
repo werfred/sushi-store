@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -168,3 +169,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sushi.store.plt@gmail.com'
 EMAIL_HOST_PASSWORD = "e'g'8'JL7eAuZkyL"
+
+MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
