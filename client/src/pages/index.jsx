@@ -18,8 +18,9 @@ const Home = (props) => {
 }
 
 export async function getStaticProps() {
-  const response = await fetch('http://127.0.0.1:8000/api/sushi?format=json')
+  const response = await fetch('http://127.0.0.1:8000/api/sushi/?format=json')
   const data = await response.json()
+  console.log('lol', data)
   return {
     props: data
   }

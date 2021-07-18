@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import * as Styles from './styles'
 import Button from '../Button'
 import Typography from '../Typography'
@@ -9,7 +7,8 @@ const ProductCard = (props) => {
   return (
     <Styles.ProductCardContainer>
       <Styles.ProductImage>
-        <Image src={props.image} alt={props.name} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={props.image} alt={props.name} />
       </Styles.ProductImage>
 
       <Styles.ProductInfo>
