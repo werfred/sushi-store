@@ -25,9 +25,9 @@ const Typography = styled.div`
 
 Typography.defaultProps = {
   textColor: 'var(--color-text)',
-  size: '3',
-  lineHeight: '1.2',
-  fontWeight: '400',
+  size: 3,
+  lineHeight: 1.2,
+  fontWeight: 400,
 }
 
 export {Typography}

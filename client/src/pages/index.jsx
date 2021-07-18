@@ -1,21 +1,18 @@
 import Seo from '../components/Seo'
+import Layout from '../layout'
+import BaseContainer from '../components/BaseContainer'
+import ProductCardsList from '../components/ProductCardsList'
 
 
 const Home = (props) => {
   return (
     <>
       <Seo />
-      <header>
-        HEADER
-      </header>
-
-      <main>
-        {JSON.stringify(props.data, null, '  ')}
-      </main>
-
-      <footer>
-        FOOTER
-      </footer>
+      <Layout>
+        <BaseContainer>
+          <ProductCardsList data={props.data} />
+        </BaseContainer>
+      </Layout>
     </>
   )
 }
