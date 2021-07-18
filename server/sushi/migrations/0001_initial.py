@@ -159,8 +159,6 @@ def load_data(apps, schema_editor):
             discount=sushi_item['discount'],
             )
 
-    User.objects.create_superuser('admin', '', 'admin')
-
 
 class Migration(migrations.Migration):
 

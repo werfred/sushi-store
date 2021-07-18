@@ -22,4 +22,4 @@
 ## ADMIN credentials
    
 8. To enter django administration follow the link:
-http://127.0.0.1:8000/admin and login with `admin`:`admin`
+http://127.0.0.1:8000/admin and login with `admin@admin.com`:`admin`

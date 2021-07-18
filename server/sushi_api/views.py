@@ -10,8 +10,8 @@ from itertools import chain
 from django.db.models import Max, Min, Q
 
 
-# Create your views here.
 class SushiDetail(APIView):
+
     def get(self, request, pk):
         try:
             sushi = Sushi.objects.get(pk=pk)

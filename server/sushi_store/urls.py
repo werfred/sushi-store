@@ -20,9 +20,12 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+admin.site.site_header = 'Sushi shop administration'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('sushi_api.urls')),
+    path('api/sushi/', include('sushi_api.urls')),
+    path('api/user/', include('user_api.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
