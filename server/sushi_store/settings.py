@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+import environ
 
+
+root = environ.Path(__file__) - 2
+env = environ.Env()
+environ.Env.read_env(env_file=os.path.join(root, '.env'))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,15 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*5gw5q^9#oghyhwyj+-w6c-8+lfakd&cpl!#3y%dld%4*@2l0m'
-FERNET_KEY_EMAIL = b'H29IHCVYs4kjRX6H91mmsu0zUY9yq2LRwGlXuikatRA='
-FERNET_KEY_PASSWORD = b'Yyg0uXRuIuUAGxqz8SyzO1fjhANVhxPVloOPnZcSOvE='
+SECRET_KEY = env.str('SECRET_KEY')
+FERNET_KEY_EMAIL = bytes(env.str('FERNET_KEY_EMAIL'), 'utf-8')
+FERNET_KEY_PASSWORD = bytes(env.str('FERNET_KEY_PASSWORD'), 'utf-8')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -168,7 +172,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sushi.store.plt@gmail.com'
-EMAIL_HOST_PASSWORD = "e'g'8'JL7eAuZkyL"
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
-MEDIA_URL = ''
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
