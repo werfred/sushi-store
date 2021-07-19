@@ -1,7 +1,6 @@
-import {applyMiddleware, createStore} from 'redux'
+import {createStore} from 'redux'
 
 import {composeWithDevTools} from 'redux-devtools-extension'
-import thunk from 'redux-thunk'
 
 
 const initialState = {
@@ -28,6 +27,6 @@ const reducer = (state = initialState, action) => {
 
 export const setLoadingAction = (payload) => ({type: SET_LOADING, payload})
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
+const store = createStore(reducer, composeWithDevTools())
 
 export {store}

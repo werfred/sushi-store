@@ -11,7 +11,6 @@ export const Button = styled.span`
   border: 1px transparent;
   background-color: var(--color-primary);
   transition: all 0.2s;
-
   &:active {
     transform: translateY(2px);
   }

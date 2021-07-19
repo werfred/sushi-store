@@ -3,7 +3,7 @@ import * as Styles from './styles'
 
 const Button = (props) => {
   return (
-    <Styles.Button active={props.active} {...props}>
+    <Styles.Button {...props}>
       {props.children}
     </Styles.Button>
   )

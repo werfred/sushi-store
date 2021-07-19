@@ -20,9 +20,7 @@ const ProductCard = (props) => {
 
         <Styles.ProductBuy>
           <Button><Typography fontWeight={'600'} textColor={'#fff'}>В корзину</Typography></Button>
-          <Styles.DiscountPrice discount={props.discount}>
-            <Typography size={'4'} fontWeight={'600'}>{props.price} грн</Typography>
-          </Styles.DiscountPrice>
+          <Typography size={'4'} fontWeight={'600'}>{props.price} грн</Typography>
         </Styles.ProductBuy>
       </Styles.ProductInfo>
 

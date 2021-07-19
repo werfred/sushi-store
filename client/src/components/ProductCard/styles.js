@@ -62,7 +62,6 @@ export const ProductImage = styled.span`
 export const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   flex-grow: 1;
 
   > * {
@@ -80,6 +79,7 @@ export const ProductBuy = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto;
 
   ${MEDIA_QUERIES.md} {
     flex-direction: column;
@@ -92,27 +92,4 @@ export const ProductBuy = styled.div`
       }
     }
   }
-`
-
-export const DiscountPrice = styled(Typography)`
-  position: relative;
-  > * {
-    ${props => props.discount > 0 ? css`
-      text-decoration: line-through;
-      position: relative;
-
-      ::after {
-        content: '${props.discount} грн';
-        position: absolute;
-        top: -20px;
-        right: -8px;
-        font-weight: 700;
-        color: var(--color-primary);
-        ${MEDIA_QUERIES.md} {
-          top: 0;
-          right: -52px;
-        }
-      }
-    ` : null
-    }
 `
