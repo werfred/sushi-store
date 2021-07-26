@@ -61,6 +61,10 @@ class SushiList(APIView):
         sort_by = request.GET.get('sort', 'name')
         is_discount = request.GET.get('discount', 'false')
         category = request.GET.get('category')
+        try:
+            limit = int(request.GET.get('limit', 12))
+        except ValueError:
+            limit = 12
         price_max = request.GET.get(
             'price_max', Sushi.objects.aggregate(Max('price'))['price__max'])
         price_min = request.GET.get(
@@ -70,7 +74,7 @@ class SushiList(APIView):
             sort_by, is_discount, category, price_min, price_max)
 
         page = request.GET.get('page', 1)
-        paginator = Paginator(sushi, 12)
+        paginator = Paginator(sushi, limit)
         try:
             data = paginator.page(page)
         except PageNotAnInteger:
