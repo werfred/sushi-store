@@ -16,19 +16,19 @@ const ProductCard = (props) => {
 
   return (
     <Styles.ProductCardContainer>
-      <Link href={`/sushi/[name]`} as={`/sushi/${props.id}`} passHref>
+      <Link href={`/sushi/[name]`} as={`/sushi/${props.slug}`} passHref>
         <Styles.ProductImage>
           <img src={props.image} alt={props.name} />
         </Styles.ProductImage>
       </Link>
 
       <Styles.ProductInfo>
-        <Link href={`/sushi/[name]`} as={`/sushi/${props.id}`}>
+        <Link href={`/sushi/[name]`} as={`/sushi/${props.slug}`}>
           <a>
             <Typography size={'4'} fontWeight={'500'}>{props.name}</Typography>
           </a>
         </Link>
-        <Link href={`/sushi/[name]`} as={`/sushi/${props.id}`}>
+        <Link href={`/sushi/[name]`} as={`/sushi/${props.slug}`}>
           <a>
             <div>
               <Typography textColor={'#F3A229'} fontWeight={'600'}>{props.quantity} г</Typography>

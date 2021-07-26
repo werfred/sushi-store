@@ -1,5 +1,4 @@
 import styled, {css} from 'styled-components'
-import {MEDIA_QUERIES} from '../../constants/mediaQueriesList'
 
 
 export const Navigation = styled.nav`

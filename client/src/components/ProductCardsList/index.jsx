@@ -11,6 +11,7 @@ const ProductCardsList = (props) => {
         <ProductCard
           key={product.id}
           id={product.id}
+          slug={product.slug}
           name={product.name}
           description={product.description}
           image={product.image}

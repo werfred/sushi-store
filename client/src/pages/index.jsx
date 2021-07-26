@@ -23,7 +23,7 @@ const Home = (props) => {
       <Layout>
         <BaseContainer>
           <Styles.FiltersArea>
-            <Filters />
+            <Filters categories={props.categories} />
             <Sorting />
           </Styles.FiltersArea>
           <Heading>Роли</Heading>
@@ -35,12 +35,19 @@ const Home = (props) => {
 }
 
 export async function getStaticProps() {
-  const response = await fetch('http://127.0.0.1:8000/api/sushi/?format=json')
-  const sushi = await response.json()
+  const [sushiResponse, categoriesResponse] = await Promise.all([
+    fetch(`http://127.0.0.1:8000/api/sushi/?format=json`),
+    fetch(`http://127.0.0.1:8000/api/sushi/categories?format=json`)
+  ])
+  const [sushi, categories] = await Promise.all([
+    sushiResponse.json(),
+    categoriesResponse.json()
+  ])
 
   return {
     props: {
-      sushi: sushi.data
+      sushi: sushi.data,
+      categories: categories.data
     }
   }
 }
