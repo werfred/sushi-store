@@ -30,8 +30,7 @@ class CategoryModelAdmin(admin.ModelAdmin):
 class SushiModelForm(forms.ModelForm):
     class Meta:
         model = Sushi
-        fields = ('name', 'category', 'description', 'image',
-                  'slug', 'quantity', 'price', 'discount')
+        fields = ('name', 'category', 'description', 'image', 'quantity', 'price', 'discount')
 
 
 class SushiModelAdmin(admin.ModelAdmin):
