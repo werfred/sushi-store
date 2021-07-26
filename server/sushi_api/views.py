@@ -10,11 +10,23 @@ from itertools import chain
 from django.db.models import Max, Min, Q
 
 
-class SushiDetail(APIView):
+class SushiDetailId(APIView):
 
     def get(self, request, pk):
         try:
             sushi = Sushi.objects.get(pk=pk)
+        except Sushi.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = SushiSerializer(sushi, context={'request': request})
+        return Response(serializer.data)
+
+
+class SushiDetailSlug(APIView):
+
+    def get(self, request, slug):
+        try:
+            sushi = Sushi.objects.get(slug=slug)
         except Sushi.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
