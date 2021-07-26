@@ -1,13 +1,22 @@
 from rest_framework import serializers
-from sushi.models import Sushi
+from sushi.models import Sushi, Category
 
 
 class SushiSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(source='category.category_name')
+    categoryName = serializers.CharField(source='category.category_name')
     image = serializers.ImageField(
-            max_length=None, use_url=True
-        )
+        max_length=None, use_url=True
+    )
 
     class Meta:
         model = Sushi
-        fields = ('id', 'name', 'category_name', 'description', 'image', 'quantity', 'price', 'discount')
+        fields = ('id', 'slug', 'name', 'categoryName',
+                  'description', 'image', 'quantity', 'price', 'discount')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    categoryName = serializers.CharField(source='category_name')
+
+    class Meta:
+        model = Category
+        fields = ('id', 'categoryName')
