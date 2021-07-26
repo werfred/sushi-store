@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from sushi.models import Sushi
+from sushi.models import Sushi, Category
 
 
 class SushiSerializer(serializers.ModelSerializer):
@@ -12,3 +12,11 @@ class SushiSerializer(serializers.ModelSerializer):
         model = Sushi
         fields = ('id', 'slug', 'name', 'categoryName',
                   'description', 'image', 'quantity', 'price', 'discount')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    categoryName = serializers.CharField(source='category_name')
+
+    class Meta:
+        model = Category
+        fields = ('id', 'categoryName')
