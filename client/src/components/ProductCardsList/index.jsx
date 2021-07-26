@@ -1,17 +1,16 @@
-import React from 'react'
-
 import * as Styles from './styles'
 import ProductCard from '../ProductCard'
 
 
 const ProductCardsList = (props) => {
-  const products = props.data
+  const products = props.sushi
 
   return (
-    <Styles.ProductCardsListContainer>
+    <Styles.ProductCardsListContainer id={'products-grid'}>
       {products.map(product => (
         <ProductCard
           key={product.id}
+          id={product.id}
           name={product.name}
           description={product.description}
           image={product.image}

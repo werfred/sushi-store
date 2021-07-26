@@ -12,8 +12,7 @@ import Cart from '../../images/cart-icon.svg'
 
 
 const Nav = () => {
-  //const cartItemsQuantity = useSelector(state => state.cartItemsQuantity)
-
+  const cartItemsAmount = useSelector(state => state.cartItemsAmount)
 
   return (
     <Styles.Navigation>
@@ -39,7 +38,7 @@ const Nav = () => {
 
         <Link href={'/cart'} passHref>
           <Styles.Cart>
-            <Styles.ItemsInCart>0</Styles.ItemsInCart>
+            <Styles.ItemsInCart>{cartItemsAmount}</Styles.ItemsInCart>
             <Cart />
           </Styles.Cart>
         </Link>
