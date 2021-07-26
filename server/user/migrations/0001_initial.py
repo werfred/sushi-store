@@ -8,7 +8,8 @@ import phonenumber_field.modelfields
 
 
 def create_initial_superuser(apps, schema_editor):
-    CustomerUser.objects.create_superuser('admin@admin.com', 'admin', 'admin', '+12125552368', 'admin')
+    CustomerUser.objects.create_superuser(
+        'admin@admin.com', 'admin', 'admin', '+12125552368', 'admin')
 
 
 class Migration(migrations.Migration):
@@ -24,21 +25,28 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CustomerUser',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('password', models.CharField(
+                    max_length=128, verbose_name='password')),
+                ('last_login', models.DateTimeField(
+                    blank=True, null=True, verbose_name='last login')),
+                ('is_superuser', models.BooleanField(default=False,
+                 help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
                 ('email', models.EmailField(max_length=254, unique=True)),
                 ('first_name', models.CharField(max_length=100)),
                 ('last_name', models.CharField(max_length=100)),
                 ('patronymic', models.CharField(blank=True, max_length=100)),
-                ('phone_number', phonenumber_field.modelfields.PhoneNumberField(max_length=128, region=None, unique=True)),
+                ('phone_number', phonenumber_field.modelfields.PhoneNumberField(
+                    max_length=128, region=None, unique=True)),
                 ('start_date', models.DateTimeField(auto_now=True)),
                 ('is_email_confirmed', models.BooleanField(default=True)),
                 ('is_staff', models.BooleanField(default=False)),
                 ('is_active', models.BooleanField(default=True)),
-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
+                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+                 related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
+                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.',
+                 related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
             ],
             options={
                 'verbose_name_plural': 'Users',
@@ -47,9 +55,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Order',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('date_of_order', models.DateTimeField(auto_now=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name_plural': 'Orders',
@@ -58,14 +68,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Address',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('street_name', models.CharField(max_length=50)),
                 ('street_number', models.CharField(max_length=10)),
-                ('entrance_number', models.CharField(blank=True, max_length=10, null=True)),
-                ('housing_number', models.CharField(blank=True, max_length=10, null=True)),
-                ('apartment_number', models.CharField(blank=True, max_length=10, null=True)),
-                ('floor_number', models.CharField(blank=True, max_length=10, null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='addresses', to=settings.AUTH_USER_MODEL)),
+                ('entrance_number', models.CharField(
+                    blank=True, max_length=10, null=True)),
+                ('housing_number', models.CharField(
+                    blank=True, max_length=10, null=True)),
+                ('apartment_number', models.CharField(
+                    blank=True, max_length=10, null=True)),
+                ('floor_number', models.CharField(
+                    blank=True, max_length=10, null=True)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='addresses', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name_plural': 'Addresses',
@@ -74,10 +90,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OrderSushi',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.IntegerField(default=1)),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='user.order')),
-                ('sushi', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sushi.sushi')),
+                ('order', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='user.order')),
+                ('sushi', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='sushi.sushi')),
             ],
             options={
                 'verbose_name_plural': 'Sushi Orders',
