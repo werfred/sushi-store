@@ -1,12 +1,12 @@
 from django.db import models
-from django.utils.text import slugify
 from django.conf import settings
+from .slugify import slugify
 
 
 class Category(models.Model):
-    category_name = models.CharField(max_length=100)
-    category_name_ukr = models.CharField(max_length=100)
-    category_name_rus = models.CharField(max_length=100)
+    category_name = models.CharField(max_length=100, null=False, unique=True)
+    category_name_ukr = models.CharField(max_length=100, null=False)
+    category_name_rus = models.CharField(max_length=100, null=False)
 
     def __str__(self) -> str:
         return self.category_name
@@ -17,6 +17,9 @@ class Category(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100, null=False, unique=True)
+    name_ukr = models.CharField(max_length=100, null=False)
+    name_rus = models.CharField(max_length=100, null=False)
+
     image = models.ImageField(
         upload_to=settings.MEDIA_ROOT_PATH + 'ingredients/')
 
@@ -41,10 +44,10 @@ class Sushi(models.Model):
     slug = models.SlugField(max_length=255)
 
     def save(self, *args, **kwargs):
-        img_path = self.image.url.replace(settings.MEDIA_URL, '').replace(
-            settings.MEDIA_ROOT_PATH, '').split('.')[0].split('_')[0]
+        # img_path = self.image.url.replace(settings.MEDIA_URL, '').replace(
+        #     settings.MEDIA_ROOT_PATH, '').split('.')[0].split('_')[0]
         if not self.slug:
-            self.slug = slugify(img_path)
+            self.slug = slugify(self.name)
         super(Sushi, self).save(*args, **kwargs)
 
     def is_discounted(self):
