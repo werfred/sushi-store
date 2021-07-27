@@ -22,10 +22,14 @@ const Sorting = () => {
   useOutsideClick(sortingContainer, () => setOpen(false))
 
   const sortByName = () => {
-    let sortedProducts = filteredProducts.sort((a, b) => a.name.localeCompare(b.name))
     let sortedAllProducts = products.sort((a, b) => a.name.localeCompare(b.name))
     setCurrentSorting('назвою')
-    dispatch(setFilteredProductsAction([...sortedProducts]))
+    if(filteredProducts.length === 0) {
+      dispatch(setFilteredProductsAction([...sortedAllProducts]))
+    } else {
+      let sortedProducts = filteredProducts.sort((a, b) => a.name.localeCompare(b.name))
+      dispatch(setFilteredProductsAction([...sortedProducts]))
+    }
     dispatch(setProductsAction([...sortedAllProducts]))
     setOpen(false)
   }
@@ -34,15 +38,25 @@ const Sorting = () => {
     let sortedProducts
     let sortedAllProducts
     if (direction === 'up') {
-      sortedProducts = filteredProducts.sort((a, b) => a.price - b.price)
       sortedAllProducts = products.sort((a, b) => a.price - b.price)
       setCurrentSorting('ціною (зростання)')
+
+      if(filteredProducts.length === 0) {
+        dispatch(setFilteredProductsAction([...sortedAllProducts]))
+      } else {
+        sortedProducts = filteredProducts.sort((a, b) => a.price - b.price)
+        dispatch(setFilteredProductsAction([...sortedProducts]))
+      }
     } else {
-      sortedProducts = filteredProducts.sort((a, b) => b.price - a.price)
       sortedAllProducts = products.sort((a, b) => b.price - a.price)
       setCurrentSorting('ціною (спадання)')
+      if(filteredProducts.length === 0) {
+        dispatch(setFilteredProductsAction([...sortedAllProducts]))
+      } else {
+        sortedProducts = filteredProducts.sort((a, b) => b.price - a.price)
+        dispatch(setFilteredProductsAction([...sortedProducts]))
+      }
     }
-    dispatch(setFilteredProductsAction([...sortedProducts]))
     dispatch(setProductsAction([...sortedAllProducts]))
     setOpen(false)
   }

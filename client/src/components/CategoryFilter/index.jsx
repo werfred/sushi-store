@@ -14,15 +14,9 @@ const CategoryFilter = (props) => {
 
   const [selectedCategory, setSelectedCategory] = useState('All')
 
-  useEffect(() => {
-    return () => {
-      dispatch(setFilteredProductsAction(products))
-    }
-  }, [])
-
-  const filter = (category) => {
+  const filterByCategory = (category) => {
     let filteredProducts = products.filter((product) => product.categoryName === category)
-    if (filteredProducts.length === 0){
+    if (filteredProducts.length === 0) {
       dispatch(setFilteredProductsAction(products))
     } else {
       dispatch(setFilteredProductsAction(filteredProducts))
@@ -32,12 +26,13 @@ const CategoryFilter = (props) => {
 
   return (
     <Styles.FilterOptions>
-      <Button active={selectedCategory === 'All'} onClick={() => filter('All')}>All</Button>
+      <Button active={selectedCategory === 'All'} onClick={() => filterByCategory('All')}>Усі</Button>
       {categories.map((category, index) => (
         <Button
           key={index}
           active={selectedCategory === category.categoryName}
-          onClick={() => filter(category.categoryName)}>{category.categoryName}
+          onClick={() => filterByCategory(category.categoryName)}>
+          {category.categoryNameUkr}
         </Button>
       ))}
     </Styles.FilterOptions>

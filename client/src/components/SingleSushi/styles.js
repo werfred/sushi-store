@@ -1,14 +1,16 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import Typography from '../Typography'
 
 
 export const ProductContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   max-width: 90%;
   border: 1px solid #b6b6b6;
   border-radius: 5px;
-  padding: 40px 60px;
+  padding: 40px 80px;
 `
 
 export const ProductImage = styled.div`
@@ -21,21 +23,57 @@ export const ProductContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   > * {
-    padding: 14px 0;
+    padding: 20px 0;
   }
 `
 
-export const ProductName = styled(Typography)`
-`
+export const ProductName = styled(Typography)``
 
-export const ProductQuantity = styled(Typography)`
-  
-`
+export const ProductQuantity = styled(Typography)``
 
-export const ProductBuy = styled.div`
-
-`
+export const ProductBuy = styled.div``
 
 export const Price = styled(Typography)`
   margin-left: 40px;
+`
+
+export const Ingredients = styled.div`
+  display: flex;
+  > * + * {
+    margin-left: 30px;
+  }
+`
+
+export const Ingredient = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 80px;
+  text-align: center;
+  > * + * {
+    margin-top: 10px;
+  }
+`
+
+const MoveBtn = css`
+  position: absolute;
+  border: 1px solid #b6b6b6;
+  border-radius: 5px;
+  height: 85px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  cursor: pointer;
+`
+
+export const PrevButton = styled.a`
+  ${MoveBtn};
+  left: -30px;
+`
+
+export const NextButton = styled.a`
+  ${MoveBtn};
+  transform: rotate(180deg);
+  right: -30px;
 `
