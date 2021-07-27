@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import * as Styles from '../styles/homeStyles'
@@ -8,15 +9,30 @@ import ProductCardsList from '../components/ProductCardsList'
 import Heading from '../components/Heading'
 import CategoryFilter from '../components/CategoryFilter'
 import Sorting from '../components/Sorting'
-import {setProductsAction} from '../store'
+import {setFilteredProductsAction, setLoadingAction, setProductsAction} from '../store'
 import PriceRangeFilter from '../components/PriceRangeFilter'
+import Typography from '../components/Typography'
+
+import NotFound from '../images/product_not-found.svg'
 
 
 const Home = (props) => {
   const dispatch = useDispatch()
-  dispatch(setProductsAction(props.sushi))
-
   const filteredProducts = useSelector(state => state.filteredProducts)
+
+  useEffect(() => {
+    dispatch(setProductsAction(props.sushi))
+    dispatch(setFilteredProductsAction(props.sushi))
+  }, [])
+
+
+  if(filteredProducts.length === 0) {
+    dispatch(setLoadingAction(true))
+  } else {
+    setTimeout(() => {
+      dispatch(setLoadingAction(false))
+    }, 1000)
+  }
 
   return (
     <>

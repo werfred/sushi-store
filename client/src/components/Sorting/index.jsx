@@ -23,14 +23,10 @@ const Sorting = () => {
 
   const sortByName = () => {
     let sortedAllProducts = products.sort((a, b) => a.name.localeCompare(b.name))
-    setCurrentSorting('назвою')
-    if(filteredProducts.length === 0) {
-      dispatch(setFilteredProductsAction([...sortedAllProducts]))
-    } else {
-      let sortedProducts = filteredProducts.sort((a, b) => a.name.localeCompare(b.name))
-      dispatch(setFilteredProductsAction([...sortedProducts]))
-    }
+    let sortedProducts = filteredProducts.sort((a, b) => a.name.localeCompare(b.name))
+    dispatch(setFilteredProductsAction([...sortedProducts]))
     dispatch(setProductsAction([...sortedAllProducts]))
+    setCurrentSorting('назвою')
     setOpen(false)
   }
 
@@ -39,24 +35,14 @@ const Sorting = () => {
     let sortedAllProducts
     if (direction === 'up') {
       sortedAllProducts = products.sort((a, b) => a.price - b.price)
+      sortedProducts = filteredProducts.sort((a, b) => a.price - b.price)
       setCurrentSorting('ціною (зростання)')
-
-      if(filteredProducts.length === 0) {
-        dispatch(setFilteredProductsAction([...sortedAllProducts]))
-      } else {
-        sortedProducts = filteredProducts.sort((a, b) => a.price - b.price)
-        dispatch(setFilteredProductsAction([...sortedProducts]))
-      }
     } else {
       sortedAllProducts = products.sort((a, b) => b.price - a.price)
+      sortedProducts = filteredProducts.sort((a, b) => b.price - a.price)
       setCurrentSorting('ціною (спадання)')
-      if(filteredProducts.length === 0) {
-        dispatch(setFilteredProductsAction([...sortedAllProducts]))
-      } else {
-        sortedProducts = filteredProducts.sort((a, b) => b.price - a.price)
-        dispatch(setFilteredProductsAction([...sortedProducts]))
-      }
     }
+    dispatch(setFilteredProductsAction([...sortedProducts]))
     dispatch(setProductsAction([...sortedAllProducts]))
     setOpen(false)
   }

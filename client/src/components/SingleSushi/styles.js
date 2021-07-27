@@ -65,15 +65,24 @@ const MoveBtn = css`
   justify-content: center;
   background-color: white;
   cursor: pointer;
+  transition: transform 0.4s;
 `
 
 export const PrevButton = styled.a`
   ${MoveBtn};
   left: -30px;
+  :hover, :active {
+    transform: translateX(-4px);
+  }
 `
 
 export const NextButton = styled.a`
   ${MoveBtn};
-  transform: rotate(180deg);
+  > svg {
+    transform: rotate(180deg);
+  }
   right: -30px;
+  :hover, :active {
+    transform: translateX(4px);
+  }
 `

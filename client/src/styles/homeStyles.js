@@ -14,3 +14,13 @@ export const Filters = styled.div`
     margin-top: 40px;
   }
 `
+
+// export const ProductsNotFound = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   padding: 40px 0;
+//   > * {
+//     padding: 20px 0;
+//   }
+// `

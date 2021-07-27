@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import * as Styles from './styles'
@@ -16,7 +16,7 @@ const CategoryFilter = (props) => {
 
   const filterByCategory = (category) => {
     let filteredProducts = products.filter((product) => product.categoryName === category)
-    if (filteredProducts.length === 0) {
+    if (category === 'All') {
       dispatch(setFilteredProductsAction(products))
     } else {
       dispatch(setFilteredProductsAction(filteredProducts))

@@ -21,9 +21,9 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOADING:
       if (action.payload){
-        document.body.style.overflowY = 'hidden'
+        //document.body.style.overflowY = 'hidden'
       } else {
-        document.body.style.overflowY = 'scroll'
+        //document.body.style.overflowY = 'scroll'
       }
       return {...state, isLoading: action.payload}
 
