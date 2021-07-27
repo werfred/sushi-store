@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import * as Styles from './styles'
@@ -6,13 +6,19 @@ import Button from '../Button'
 import {setFilteredProductsAction} from '../../store'
 
 
-const Filters = (props) => {
+const CategoryFilter = (props) => {
   const categories = props.categories
 
   const dispatch = useDispatch()
   const products = useSelector(state => state.products)
 
   const [selectedCategory, setSelectedCategory] = useState('All')
+
+  useEffect(() => {
+    return () => {
+      dispatch(setFilteredProductsAction(products))
+    }
+  }, [])
 
   const filter = (category) => {
     let filteredProducts = products.filter((product) => product.categoryName === category)
@@ -38,4 +44,4 @@ const Filters = (props) => {
   )
 }
 
-export default Filters
+export default CategoryFilter

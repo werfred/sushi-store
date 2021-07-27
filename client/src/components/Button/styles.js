@@ -4,7 +4,7 @@ import {MEDIA_QUERIES} from '../../constants/mediaQueriesList'
 
 export const Button = styled.span`
   cursor: pointer;
-  padding: 14px 24px;
+  padding: 14px 20px;
   border-radius: 30px;
   display: inline-block;
   font-weight: 600;
@@ -35,8 +35,14 @@ export const Button = styled.span`
     }
   `}
   
-  ${MEDIA_QUERIES.xs} {
+  ${MEDIA_QUERIES.md} {
     padding: 12px 16px;
+  }
+  ${MEDIA_QUERIES.sm} {
+    padding: 10px 14px;
+  }
+  ${MEDIA_QUERIES.xs} {
+    padding: 8px 12px;
   }
 `
 

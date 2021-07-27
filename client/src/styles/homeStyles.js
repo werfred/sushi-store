@@ -6,3 +6,11 @@ export const FiltersArea = styled.div`
   justify-content: space-between;
   padding: 20px 0;
 `
+
+export const Filters = styled.div`
+  display: flex;
+  flex-direction: column;
+  > * + * {
+    margin-top: 40px;
+  }
+`

@@ -6,9 +6,10 @@ import Layout from '../layout'
 import BaseContainer from '../components/BaseContainer'
 import ProductCardsList from '../components/ProductCardsList'
 import Heading from '../components/Heading'
-import Filters from '../components/Filters'
+import CategoryFilter from '../components/CategoryFilter'
 import Sorting from '../components/Sorting'
 import {setProductsAction} from '../store'
+import PriceRangeFilter from '../components/PriceRangeFilter'
 
 
 const Home = (props) => {
@@ -23,7 +24,10 @@ const Home = (props) => {
       <Layout>
         <BaseContainer>
           <Styles.FiltersArea>
-            <Filters categories={props.categories} />
+            <Styles.Filters>
+              <CategoryFilter categories={props.categories} />
+              <PriceRangeFilter />
+            </Styles.Filters>
             <Sorting />
           </Styles.FiltersArea>
           <Heading>Роли</Heading>
@@ -48,7 +52,8 @@ export async function getStaticProps() {
     props: {
       sushi: sushi.data,
       categories: categories.data
-    }
+    },
+    revalidate: 10
   }
 }
 

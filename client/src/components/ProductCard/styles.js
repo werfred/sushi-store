@@ -86,7 +86,7 @@ export const ProductBuy = styled.div`
     > * {
       :nth-child(2) {
         order: -1;
-        margin-bottom: 10px;
+        margin-bottom: 14px;
       }
     }
   }

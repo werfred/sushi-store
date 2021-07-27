@@ -31,7 +31,7 @@ const SingleProductPage = (props) => {
 export async function getServerSideProps(context) {
   const [singleSushiResponse, recommendedSushiResponse] = await Promise.all([
     fetch(`http://127.0.0.1:8000/api/sushi/slug/${context.params.name}?format=json`),
-    fetch(`http://127.0.0.1:8000/api/sushi/?format=json`)
+    fetch(`http://127.0.0.1:8000/api/sushi/?format=json&limit=4`)
   ])
   const [singleSushi, recommendedSushi] = await Promise.all([
     singleSushiResponse.json(),

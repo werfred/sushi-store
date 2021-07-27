@@ -19,6 +19,7 @@
     "styled-normalize": "^8.0.7"
   },
   "devDependencies": {
+    "@material-ui/core": "^4.12.2",
     "babel-plugin-inline-react-svg": "^2.0.1",
     "babel-plugin-styled-components": "^1.13.2",
     "eslint": "7.30.0",
