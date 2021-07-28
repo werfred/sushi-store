@@ -10,7 +10,19 @@ class ReadOnlyModelSerializer(serializers.ModelSerializer):
         return fields
 
 
-class IngredientSerializer(ReadOnlyModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
+    categoryName = serializers.CharField(source='category_name')
+    categoryNameRus = serializers.CharField(
+        source='category_name_rus')
+    categoryNameUkr = serializers.CharField(
+        source='category_name_ukr')
+
+    class Meta:
+        model = Category
+        fields = ('categoryName', 'categoryNameRus', 'categoryNameUkr',)
+
+
+class IngredientSerializer(serializers.ModelSerializer):
     nameRus = serializers.CharField(source='name_rus')
     nameUkr = serializers.CharField(source='name_ukr')
 
@@ -20,15 +32,11 @@ class IngredientSerializer(ReadOnlyModelSerializer):
 
 
 class SushiSerializer(ReadOnlyModelSerializer):
-    categoryName = serializers.CharField(source='category.category_name')
-    categoryNameRus = serializers.CharField(
-        source='category.category_name_rus')
-    categoryNameUkr = serializers.CharField(
-        source='category.category_name_ukr')
+    categoryNames = CategorySerializer(source='category')
+    ingredients = IngredientSerializer(many=True)
     image = serializers.ImageField(
         max_length=None, use_url=True
     )
-    ingredients = IngredientSerializer(many=True)
 
     next_slug = serializers.SerializerMethodField('get_next_slug')
     prev_slug = serializers.SerializerMethodField('get_prev_slug')
@@ -49,16 +57,5 @@ class SushiSerializer(ReadOnlyModelSerializer):
 
     class Meta:
         model = Sushi
-        fields = '__all__'
-
-
-class CategorySerializer(ReadOnlyModelSerializer):
-    categoryName = serializers.CharField(source='category_name')
-    categoryNameRus = serializers.CharField(
-        source='category_name_rus')
-    categoryNameUkr = serializers.CharField(
-        source='category_name_ukr')
-
-    class Meta:
-        model = Category
-        fields = '__all__'
+        fields = ('id', 'slug', 'name', 'description', 'image', 'categoryNames', 'ingredients',
+                  'quantity', 'price', 'discount', 'next_slug', 'prev_slug',)

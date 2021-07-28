@@ -44,8 +44,6 @@ class Sushi(models.Model):
     slug = models.SlugField(max_length=255)
 
     def save(self, *args, **kwargs):
-        # img_path = self.image.url.replace(settings.MEDIA_URL, '').replace(
-        #     settings.MEDIA_ROOT_PATH, '').split('.')[0].split('_')[0]
         if not self.slug:
             self.slug = slugify(self.name)
         super(Sushi, self).save(*args, **kwargs)
