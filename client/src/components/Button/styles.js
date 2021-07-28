@@ -24,7 +24,7 @@ export const Button = styled.span`
       }
     }
   ` : css`
-    background-color: #fff;
+    background-color: var(--color-white-bg);
     color: var(--color-text);
     border: 1px solid var(--color-primary);
     @media (hover: hover) and (pointer: fine) {

@@ -52,6 +52,13 @@ export const Ingredient = styled.div`
   > * + * {
     margin-top: 10px;
   }
+  > img {
+    transition: transform 0.3s;
+    :hover {
+      transform: translateY(-4px) scale(1.1);
+    }
+  }
+
 `
 
 const MoveBtn = css`
@@ -63,7 +70,7 @@ const MoveBtn = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: var(--color-white-bg);
   cursor: pointer;
   transition: transform 0.4s;
 `

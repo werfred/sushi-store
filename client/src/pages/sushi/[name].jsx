@@ -1,6 +1,3 @@
-import {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
-
 import * as Styles from '../../styles/sushiStyles'
 import Seo from '../../components/Seo'
 import Layout from '../../layout'
@@ -8,17 +5,9 @@ import BaseContainer from '../../components/BaseContainer'
 import SingleSushi from '../../components/SingleSushi'
 import ProductCardsList from '../../components/ProductCardsList'
 import Heading from '../../components/Heading'
-import {setFilteredProductsAction, setLoadingAction} from '../../store'
 
 
 const SingleProductPage = (props) => {
-  //const dispatch = useDispatch()
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(setFilteredProductsAction([]))
-  //   }
-  // }, [])
-
   return (
     <>
       <Seo />

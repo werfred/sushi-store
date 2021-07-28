@@ -1,6 +1,4 @@
-import Link from 'next/link'
-import {useDispatch, useSelector} from 'react-redux'
-import {useEffect, useState} from 'react'
+import {useDispatch} from 'react-redux'
 
 import * as Styles from './styles'
 import Button from '../Button'
@@ -12,35 +10,6 @@ import {setCartItemsAmountAction} from '../../store'
 
 const SingleSushi = ({singleSushi}) => {
   const dispatch = useDispatch()
-  const filteredProducts = useSelector(state => state.filteredProducts)
-  const [prevNextProducts, setPrevNextProducts] = useState([null, null])
-
-  const getPrevNext = () => {
-    let prev, next
-    let index = 0
-
-    if (filteredProducts.length > 0){
-      filteredProducts.forEach((product, i)=> {
-        if(product.id === singleSushi.id){
-          index = i
-        }
-      })
-      if(index !== 0) {
-        prev = filteredProducts[index-1].slug
-      }
-      if(filteredProducts[index+1]) {
-        next = filteredProducts[index+1].slug
-      }
-    } else {
-      console.log('gg')
-    }
-    return [prev, next]
-  }
-
-  useEffect(() => {
-    const prevNext = getPrevNext()
-    setPrevNextProducts(prevNext)
-  }, [singleSushi])
 
   const AddToCartHandler = () => {
     dispatch(setCartItemsAmountAction())
@@ -77,8 +46,8 @@ const SingleSushi = ({singleSushi}) => {
           </Styles.Price>
         </Styles.ProductBuy>
       </Styles.ProductContent>
-      {prevNextProducts[0] && <Link href={`/sushi/${prevNextProducts[0]}`} replace passHref><Styles.PrevButton><Arrow /></Styles.PrevButton></Link>}
-      {prevNextProducts[1] && <Link href={`/sushi/${prevNextProducts[1]}`} replace passHref><Styles.NextButton><Arrow /></Styles.NextButton></Link>}
+      <Styles.PrevButton href={`/sushi/${singleSushi.prev_slug}`}><Arrow /></Styles.PrevButton>
+      <Styles.NextButton href={`/sushi/${singleSushi.next_slug}`}><Arrow /></Styles.NextButton>
     </Styles.ProductContainer>
   )
 }

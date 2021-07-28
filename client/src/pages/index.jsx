@@ -21,21 +21,15 @@ const Home = (props) => {
   const filteredProducts = useSelector(state => state.filteredProducts)
 
   const [productsToShow, setProductsToShow] = useState([])
+
   useEffect(() => {
     dispatch(setProductsAction(props.sushi))
     dispatch(setFilteredProductsAction(props.sushi))
-
-    // dispatch(setLoadingAction(true))
-    //
-    // setTimeout(() => {
-    //   dispatch(setLoadingAction(false))
-    // }, 1000)
   }, [])
 
   useEffect(() => {
     setProductsToShow(filteredProducts)
   }, [filteredProducts])
-
 
   return (
     <>
@@ -50,7 +44,7 @@ const Home = (props) => {
             <Sorting />
           </Styles.FiltersArea>
           <Heading>Роли</Heading>
-          <ProductCardsList sushi={productsToShow} />
+          <ProductCardsList sushi={props.sushi} />
           {/*{productsToShow.length > 0 ? (*/}
           {/*  <>*/}
           {/*    <Heading>Роли</Heading>*/}
@@ -83,8 +77,7 @@ export async function getStaticProps() {
     props: {
       sushi: sushi.data,
       categories: categories.data
-    },
-    revalidate: 10
+    }
   }
 }
 

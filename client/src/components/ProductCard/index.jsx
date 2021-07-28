@@ -16,26 +16,20 @@ const ProductCard = (props) => {
 
   return (
     <Styles.ProductCardContainer>
-      <Link href={`/sushi/[name]`} as={`/sushi/${props.slug}`} passHref>
+      <Link href={`/sushi/${props.slug}`} passHref>
         <Styles.ProductImage>
           <img src={props.image} alt={props.name} />
         </Styles.ProductImage>
       </Link>
 
       <Styles.ProductInfo>
-        <Link href={`/sushi/[name]`} as={`/sushi/${props.slug}`}>
-          <a>
+          <a href={`/sushi/${props.slug}`}>
             <Typography size={'4'} fontWeight={'500'}>{props.name}</Typography>
           </a>
-        </Link>
-        <Link href={`/sushi/[name]`} as={`/sushi/${props.slug}`}>
-          <a>
-            <div>
-              <Typography textColor={'#F3A229'} fontWeight={'600'}>{props.quantity} г</Typography>
-              <Typography lineHeight={'1.5'}> - {props.description}</Typography>
-            </div>
+          <a href={`/sushi/${props.slug}`}>
+            <Typography textColor={'#F3A229'} fontWeight={'600'}>{props.quantity} г</Typography>
+            <Typography lineHeight={'1.5'}> - {props.description}</Typography>
           </a>
-        </Link>
         <Styles.ProductBuy>
           <Button onClick={AddToCartHandler}><Typography fontWeight={'600'} textColor={'#fff'}>В корзину</Typography></Button>
           <Typography size={'4'} fontWeight={'600'}>{props.price} грн</Typography>
