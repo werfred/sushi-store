@@ -36,7 +36,8 @@ class SushiList(APIView):
 
     def execute_query(self, sort_by, is_discount, category, price_min, price_max):
 
-        fields = ('name', 'category__category_name', 'quantity', 'price',)
+        fields = ('id', 'name', 'category__category_name',
+                  'quantity', 'price',)
 
         if sort_by in ['category', '-category']:
             if '-' in sort_by:
@@ -56,9 +57,10 @@ class SushiList(APIView):
         data = []
         nextPage = 1
         previousPage = 1
-        sort_by = request.GET.get('sort', 'name')
+        sort_by = request.GET.get('sort', 'id')
         is_discount = request.GET.get('discount', 'false')
         category = request.GET.get('category')
+        exclude = request.GET.getlist('exclude')
         limit = int(request.GET.get('limit', Sushi.objects.all().count()))
         price_max = request.GET.get(
             'price_max', Sushi.objects.aggregate(Max('price'))['price__max'])
@@ -67,6 +69,10 @@ class SushiList(APIView):
 
         sushi = self.execute_query(
             sort_by, is_discount, category, price_min, price_max)
+
+        if exclude:
+            for slug in exclude:
+                sushi = sushi.exclude(slug=slug)
 
         page = request.GET.get('page', 1)
         paginator = Paginator(sushi, limit)
