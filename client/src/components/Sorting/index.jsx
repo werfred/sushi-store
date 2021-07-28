@@ -12,8 +12,10 @@ import SortIcon from '../../images/sort-icon.svg'
 
 const Sorting = () => {
   const dispatch = useDispatch()
+
   const filteredProducts = useSelector(state => state.filteredProducts)
   const products = useSelector(state => state.products)
+  //const currentCategory = useSelector(state => state.currentCategory)
 
   const [open, setOpen] = useState(false)
   const [currentSorting, setCurrentSorting] = useState('виберіть')

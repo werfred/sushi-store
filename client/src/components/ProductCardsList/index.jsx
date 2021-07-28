@@ -6,7 +6,7 @@ const ProductCardsList = (props) => {
   const products = props.sushi
 
   return (
-    <Styles.ProductCardsListContainer id={'products-grid'}>
+    <Styles.ProductCardsListContainer>
       {products.map(product => (
         <ProductCard
           key={product.id}

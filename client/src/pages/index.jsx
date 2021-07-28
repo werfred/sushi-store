@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import * as Styles from '../styles/homeStyles'
@@ -20,19 +20,22 @@ const Home = (props) => {
   const dispatch = useDispatch()
   const filteredProducts = useSelector(state => state.filteredProducts)
 
+  const [productsToShow, setProductsToShow] = useState([])
   useEffect(() => {
     dispatch(setProductsAction(props.sushi))
     dispatch(setFilteredProductsAction(props.sushi))
+
+    // dispatch(setLoadingAction(true))
+    //
+    // setTimeout(() => {
+    //   dispatch(setLoadingAction(false))
+    // }, 1000)
   }, [])
 
+  useEffect(() => {
+    setProductsToShow(filteredProducts)
+  }, [filteredProducts])
 
-  if(filteredProducts.length === 0) {
-    dispatch(setLoadingAction(true))
-  } else {
-    setTimeout(() => {
-      dispatch(setLoadingAction(false))
-    }, 1000)
-  }
 
   return (
     <>
@@ -47,7 +50,19 @@ const Home = (props) => {
             <Sorting />
           </Styles.FiltersArea>
           <Heading>Роли</Heading>
-          <ProductCardsList sushi={filteredProducts.length > 0 ? filteredProducts : props.sushi} />
+          <ProductCardsList sushi={productsToShow} />
+          {/*{productsToShow.length > 0 ? (*/}
+          {/*  <>*/}
+          {/*    <Heading>Роли</Heading>*/}
+          {/*    <ProductCardsList sushi={productsToShow} />*/}
+          {/*  </>*/}
+          {/*) : (*/}
+          {/*  <Styles.ProductsNotFound>*/}
+          {/*    <Typography size={6}>На жаль, товарів які б задовольніли ваші налаштування, не знайдено</Typography>*/}
+          {/*    <Typography size={5}>Змініть налаштування фільтрів, або обновіть сторінку</Typography>*/}
+          {/*    <NotFound />*/}
+          {/*  </Styles.ProductsNotFound>*/}
+          {/*)}*/}
         </BaseContainer>
       </Layout>
     </>

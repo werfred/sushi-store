@@ -32,7 +32,7 @@ const ProductCard = (props) => {
           <a>
             <div>
               <Typography textColor={'#F3A229'} fontWeight={'600'}>{props.quantity} г</Typography>
-              <Typography lineHeight={'1.5'}>{props.description}</Typography>
+              <Typography lineHeight={'1.5'}> - {props.description}</Typography>
             </div>
           </a>
         </Link>

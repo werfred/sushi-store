@@ -1,9 +1,9 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import * as Styles from './styles'
 import Button from '../Button'
-import {setFilteredProductsAction} from '../../store'
+import {setCurrentCategoryAction, setFilteredProductsAction} from '../../store'
 
 
 const CategoryFilter = (props) => {
@@ -23,6 +23,10 @@ const CategoryFilter = (props) => {
     }
     setSelectedCategory(category)
   }
+
+  useEffect(() => {
+    dispatch(setCurrentCategoryAction(selectedCategory))
+  }, [selectedCategory])
 
   return (
     <Styles.FilterOptions>
