@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.serializers import ALL_FIELDS
 from rest_framework.views import APIView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import rest_framework.status as status
@@ -61,10 +59,7 @@ class SushiList(APIView):
         sort_by = request.GET.get('sort', 'name')
         is_discount = request.GET.get('discount', 'false')
         category = request.GET.get('category')
-        try:
-            limit = int(request.GET.get('limit', 12))
-        except ValueError:
-            limit = 12
+        limit = int(request.GET.get('limit', Sushi.objects.all().count()))
         price_max = request.GET.get(
             'price_max', Sushi.objects.aggregate(Max('price'))['price__max'])
         price_min = request.GET.get(
