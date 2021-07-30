@@ -1,12 +1,14 @@
+import {useDispatch} from 'react-redux'
+import {useEffect} from 'react'
+
 import * as Styles from '../../styles/sushiStyles'
 import Seo from '../../components/Seo'
 import Layout from '../../layout'
 import BaseContainer from '../../components/BaseContainer'
 import SingleSushi from '../../components/SingleSushi'
-import RecommendedProductsCardList from '../../components/RecommendedProductsCardList'
-import {useEffect} from 'react'
+import Heading from '../../components/Heading'
+import ProductCardsList from '../../components/ProductCardsList'
 import {setLoadingAction} from '../../store'
-import {useDispatch} from 'react-redux'
 
 
 const SingleProductPage = (props) => {
@@ -26,7 +28,8 @@ const SingleProductPage = (props) => {
           <BaseContainer>
             <SingleSushi singleSushi={props.singleSushi} />
             <Styles.RecommendationContainer>
-              <RecommendedProductsCardList sushi={props.recommendedSushi} />
+              <Heading>Також рекомендуємо спробувати</Heading>
+              <ProductCardsList sushi={props.recommendedSushi} />
             </Styles.RecommendationContainer>
           </BaseContainer>
         </Styles.SingleSushi>
