@@ -28,7 +28,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ingredient
-        fields = ('id', 'name', 'nameRus', 'nameUkr',)
+        fields = ('id', 'name', 'nameRus', 'nameUkr', 'image',)
 
 
 class SushiSerializer(ReadOnlyModelSerializer):
