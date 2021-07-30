@@ -158,7 +158,7 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
+        'sushi_api.util.PrettyJsonRenderer',
     ),
 
     'DEFAULT_PARSER_CLASSES': (

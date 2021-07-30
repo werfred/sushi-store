@@ -1,12 +1,10 @@
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 import {MEDIA_QUERIES} from '../../constants/mediaQueriesList'
-import Typography from '../Typography'
 
 
 export const ProductCardContainer = styled.div`
   max-width: 300px;
   width: 100%;
-  cursor: pointer;
   padding: 34px 28px;
   display: flex;
   flex-direction: column;
@@ -29,7 +27,7 @@ export const ProductCardContainer = styled.div`
   }
 `
 
-export const ProductImage = styled.span`
+export const ProductImage = styled.a`
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
@@ -88,7 +86,7 @@ export const ProductBuy = styled.div`
     > * {
       :nth-child(2) {
         order: -1;
-        margin-bottom: 10px;
+        margin-bottom: 14px;
       }
     }
   }

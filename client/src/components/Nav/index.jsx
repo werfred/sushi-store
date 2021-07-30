@@ -12,34 +12,28 @@ import Cart from '../../images/cart-icon.svg'
 
 
 const Nav = () => {
-  //const cartItemsQuantity = useSelector(state => state.cartItemsQuantity)
-
+  const cartItemsAmount = useSelector(state => state.cartItemsAmount)
 
   return (
     <Styles.Navigation>
       <BaseContainer>
-
         <Link href={'/'}>
           <a><Logo /></a>
         </Link>
 
-        <Link href={"tel: 380999999999"} passHref>
-          <Styles.PhoneNumber>
-            <Phone />
-            <Typography>+38 (099) 999 99 99</Typography>
-          </Styles.PhoneNumber>
-        </Link>
+        <Styles.PhoneNumber href={'tel: 380999999999'}>
+          <Phone />
+          <Typography>+38 (099) 999 99 99</Typography>
+        </Styles.PhoneNumber>
 
-        <Link href="https://www.google.com/maps/search/?api=1&query=49.58619434%2C34.55096394" passHref>
-          <Styles.Location rel="noreferrer" target="_blank">
-            <Location />
-            <Typography size={2}>м. Полтава, вул. Європейська 10. <br /> Працюємо с 11:00 до 23:00</Typography>
-          </Styles.Location>
-        </Link>
+        <Styles.Location href="https://www.google.com/maps/search/?api=1&query=49.58619434%2C34.55096394" rel="noreferrer" target="_blank">
+          <Location />
+          <Typography size={2}>м. Полтава, вул. Європейська 10. <br /> Працюємо с 11:00 до 23:00</Typography>
+        </Styles.Location>
 
         <Link href={'/cart'} passHref>
           <Styles.Cart>
-            <Styles.ItemsInCart>0</Styles.ItemsInCart>
+            <Styles.ItemsInCart>{cartItemsAmount}</Styles.ItemsInCart>
             <Cart />
           </Styles.Cart>
         </Link>

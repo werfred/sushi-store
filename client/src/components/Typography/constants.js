@@ -28,6 +28,11 @@ const SIZES = {
     sm: '18px',
     md: '24px',
     default: '28px'
+  },
+  7: {
+    sm: '28px',
+    md: '36px',
+    default: '42px'
   }
 }
 

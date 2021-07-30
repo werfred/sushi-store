@@ -61,7 +61,10 @@ class SushiList(APIView):
         is_discount = request.GET.get('discount', 'false')
         category = request.GET.get('category')
         exclude = request.GET.getlist('exclude')
-        limit = int(request.GET.get('limit', Sushi.objects.all().count()))
+        try:
+            limit = int(request.GET.get('limit', Sushi.objects.all().count()))
+        except:
+            limit = Sushi.objects.all().count()
         price_max = request.GET.get(
             'price_max', Sushi.objects.aggregate(Max('price'))['price__max'])
         price_min = request.GET.get(
@@ -90,7 +93,7 @@ class SushiList(APIView):
         if data.has_previous():
             previousPage = data.previous_page_number()
 
-        return Response({'data': serializer.data, 'count': paginator.count, 'numpages': paginator.num_pages, 'nextlink': '/sushi/?page=' + str(nextPage), 'prevlink': '/sushi/?page=' + str(previousPage)})
+        return Response(serializer.data)
 
 
 class CategoryList(APIView):
@@ -102,7 +105,7 @@ class CategoryList(APIView):
         try:
             limit = int(request.GET.get('limit', 12))
         except ValueError:
-            limit = 12
+            limit = Category.objects.all().count()
 
         categories = Category.objects.all()
 
@@ -122,4 +125,4 @@ class CategoryList(APIView):
         if data.has_previous():
             previousPage = data.previous_page_number()
 
-        return Response({'data': serializer.data, 'count': paginator.count, 'numpages': paginator.num_pages, 'nextlink': '/categories/?page=' + str(nextPage), 'prevlink': '/categories/?page=' + str(previousPage)})
+        return Response(serializer.data)

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {MEDIA_QUERIES} from '../../constants/mediaQueriesList'
 
 
-const ProductCardsListContainer = styled.div`
+export const ProductCardsListContainer = styled.div`
   padding-bottom: 60px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -15,7 +15,3 @@ const ProductCardsListContainer = styled.div`
     grid-gap: 20px 10px;
   }
 `
-
-export {
-  ProductCardsListContainer
-}

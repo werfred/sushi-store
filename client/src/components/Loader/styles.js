@@ -4,7 +4,7 @@ const LoaderContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #fff;
-  opacity: 0.7;
+  opacity: 1;
   position: fixed;
   top: 0;
   bottom: 0;

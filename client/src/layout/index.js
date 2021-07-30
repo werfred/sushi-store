@@ -9,7 +9,7 @@ const Layout = (props) => {
         <Nav />
       </header>
 
-      <main>
+      <main style={{backgroundColor: 'var(--color-white-bg)'}}>
         {props.children}
       </main>
 

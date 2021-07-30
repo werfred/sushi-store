@@ -1,9 +1,9 @@
 import styled, {css} from 'styled-components'
-import {MEDIA_QUERIES} from '../../constants/mediaQueriesList'
 
 
 export const Navigation = styled.nav`
   padding: 16px 0;
+  background-color: var(--color-white-bg);
   > * {
     display: flex;
     align-items: center;
