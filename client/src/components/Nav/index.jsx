@@ -17,9 +17,9 @@ const Nav = () => {
   return (
     <Styles.Navigation>
       <BaseContainer>
-        <a href={'/'}>
-          <Logo />
-        </a>
+        <Link href={'/'}>
+          <a><Logo /></a>
+        </Link>
 
         <Styles.PhoneNumber href={'tel: 380999999999'}>
           <Phone />
@@ -31,10 +31,12 @@ const Nav = () => {
           <Typography size={2}>м. Полтава, вул. Європейська 10. <br /> Працюємо с 11:00 до 23:00</Typography>
         </Styles.Location>
 
-        <Styles.Cart href={'/cart'}>
-          <Styles.ItemsInCart>{cartItemsAmount}</Styles.ItemsInCart>
-          <Cart />
-        </Styles.Cart>
+        <Link href={'/cart'} passHref>
+          <Styles.Cart>
+            <Styles.ItemsInCart>{cartItemsAmount}</Styles.ItemsInCart>
+            <Cart />
+          </Styles.Cart>
+        </Link>
 
       </BaseContainer>
     </Styles.Navigation>

@@ -4,7 +4,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 
 
 const initialState = {
-  isLoading: false,
+  isLoading: true,
   cartItemsAmount: 0,
   products: [],
   filteredProducts: [],

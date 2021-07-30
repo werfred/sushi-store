@@ -23,13 +23,17 @@ const ProductCard = (props) => {
       </Link>
 
       <Styles.ProductInfo>
-          <a href={`/sushi/${props.slug}`}>
+        <Link href={`/sushi/${props.slug}`}>
+          <a>
             <Typography size={'4'} fontWeight={'500'}>{props.name}</Typography>
           </a>
-          <a href={`/sushi/${props.slug}`}>
+        </Link>
+        <Link href={`/sushi/${props.slug}`}>
+          <a>
             <Typography textColor={'#F3A229'} fontWeight={'600'}>{props.quantity} г</Typography>
             <Typography lineHeight={'1.5'}> - {props.description}</Typography>
           </a>
+        </Link>
         <Styles.ProductBuy>
           <Button onClick={AddToCartHandler}><Typography fontWeight={'600'} textColor={'#fff'}>В корзину</Typography></Button>
           <Typography size={'4'} fontWeight={'600'}>{props.price} грн</Typography>

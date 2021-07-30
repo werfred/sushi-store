@@ -15,7 +15,7 @@ const CategoryFilter = (props) => {
   const [selectedCategory, setSelectedCategory] = useState('All')
 
   const filterByCategory = (category) => {
-    let filteredProducts = products.filter((product) => product.categoryName === category)
+    let filteredProducts = products.filter((product) => product.categoryNames.categoryName === category)
     if (category === 'All') {
       dispatch(setFilteredProductsAction(products))
     } else {

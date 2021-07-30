@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import {useDispatch} from 'react-redux'
 
 import * as Styles from './styles'
@@ -46,8 +47,8 @@ const SingleSushi = ({singleSushi}) => {
           </Styles.Price>
         </Styles.ProductBuy>
       </Styles.ProductContent>
-      <Styles.PrevButton href={`/sushi/${singleSushi.prev_slug}`}><Arrow /></Styles.PrevButton>
-      <Styles.NextButton href={`/sushi/${singleSushi.next_slug}`}><Arrow /></Styles.NextButton>
+      <Link href={`/sushi/${singleSushi.prev_slug}`} passHref><Styles.PrevButton><Arrow /></Styles.PrevButton></Link>
+      <Link href={`/sushi/${singleSushi.next_slug}`} passHref><Styles.NextButton><Arrow /></Styles.NextButton></Link>
     </Styles.ProductContainer>
   )
 }
