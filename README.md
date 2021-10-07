@@ -1,24 +1,13 @@
-### Sushi store
+### Sushi store client
 
-## Project setup
+Create .env.local file in the project root and add inside
+1) `NEXT_PUBLIC_API_URL = http://127.0.0.1:8000`
 
-1. clone repo
-2. pipenv shell
-3. pipenv install
+2) `NEXT_PUBLIC_GOOGLE_ID = 295264717867-a820d6hphgleqas4dfro4jll1g4la01g.apps.googleusercontent.com`
 
-## Starting migrations
+3) `NEXT_PUBLIC_DOMAIN = 127.0.0.1`
 
-4. `cd server` `python manage.py migrate`
+4) `NEXT_PUBLIC_GOOGLE_ANALYTICS = G-8S8G1SC3LP`
 
-## Project run
-
-5. Run the server:
-`cd server` `python manage.py runserver`
-
-5. Run the client: 
-`cd client` `npm install` `npm run dev`
-   
-## ADMIN credentials
-   
-7. To enter django administration follow the link:
-http://127.0.0.1:8000/admin and login with `admin@admin.com`:`admin`
+Run the client: 
+`npm install` `npm run dev`
