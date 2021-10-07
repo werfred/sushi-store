@@ -11,7 +11,7 @@ import {useRequest} from 'hooks/request'
 
 
 const AddressSchema = Yup.object().shape({
-  streetName: Yup.string().matches(/^[а-яА-Яa-zA-Z-їЇіІ]+$/g).min(4).max(50).required(),
+  streetName: Yup.string().matches(/^[а-яА-Яa-zA-Z-їЇіІ ]+$/g).min(4).max(50).required(),
   houseNumber: Yup.number().min(1).max(1000).required(),
   entranceNumber: Yup.number().min(1).max(10),
   apartmentsNumber: Yup.number().min(1).max(300)
@@ -75,7 +75,7 @@ const AddressDataForm = () => {
                 placeholder={'76'}
               />
               <Styles.SubmitButton type="submit"
-                                   active={Object.keys(errors).length === 0 && Object.keys(touched).length !== 0}>
+                                   active={Object.keys(errors).length === 0}>
                 Зберегти адресу
               </Styles.SubmitButton>
             </Styles.UserDataForm>

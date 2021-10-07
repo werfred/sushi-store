@@ -5,5 +5,7 @@ import {persistor} from 'store'
 export const logout = () => {
   removeTokenFromCookie()
   persistor.purge()
-  location.href = '/'
+  setTimeout(() => {
+    location.reload()
+  }, 200)
 }

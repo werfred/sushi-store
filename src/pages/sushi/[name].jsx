@@ -28,7 +28,18 @@ const SingleProductPage = (props) => {
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sushi`)
+  const sushi = await response.json()
+
+  const paths = sushi.map((item) => ({
+    params: {name: item.slug}
+  }))
+
+  return {paths, fallback: 'blocking'}
+}
+
+export async function getStaticProps(context) {
   const singleProductResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sushi/slug/${context.params.name}`)
   const singleProduct = await singleProductResponse.json()
 
@@ -39,7 +50,8 @@ export async function getServerSideProps(context) {
     props: {
       singleSushi: singleProduct,
       recommendedSushi: recommendedProduct
-    }
+    },
+    revalidate: 60
   }
 }
 

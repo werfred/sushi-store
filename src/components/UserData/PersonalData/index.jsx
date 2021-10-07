@@ -59,7 +59,7 @@ const PersonalDataForm = () => {
                 placeholder={'+380 99-999-99-99'}
               />
               <Styles.SubmitButton type="submit"
-                                   active={Object.keys(errors).length === 0 && Object.keys(touched).length !== 0}>
+                                   active={Object.keys(errors).length === 0}>
                 Зберегти
               </Styles.SubmitButton>
             </Styles.UserDataForm>

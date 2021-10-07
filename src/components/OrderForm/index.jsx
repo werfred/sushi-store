@@ -66,7 +66,7 @@ const OrderForm = () => {
     customerName: Yup.string().min(2).max(50).required(),
     email: Yup.string().email().required(),
     phoneNumber: Yup.string().matches(phoneNumberRegex).required(),
-    streetName: Yup.string().matches(/^[а-яА-Яa-zA-Z-їЇіІ]+$/g).min(4).max(50).required(),
+    streetName: Yup.string().matches(/^[а-яА-Яa-zA-Z-їЇіІ ]+$/g).min(4).max(50).required(),
     houseNumber: Yup.number().min(1).max(1000).required(),
     entranceNumber: Yup.number().min(1).max(10),
     apartmentsNumber: Yup.number().min(1).max(300),
@@ -203,7 +203,7 @@ const OrderForm = () => {
               <Styles.Buttons>
                 <Button onClick={() => router.push('/')} active={false} type="submit">← Назад на головну</Button>
                 <Styles.SubmitButton
-                  active={Object.keys(errors).length === 0 && Object.keys(touched).length !== 0}
+                  active={Object.keys(errors).length === 0}
                   type="submit">
                   Оформити замовлення
                 </Styles.SubmitButton>

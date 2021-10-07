@@ -62,7 +62,7 @@ const Home = (props) => {
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const [sushiResponse, categoriesResponse] = await Promise.all([
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sushi`),
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sushi/categories`)
@@ -76,7 +76,8 @@ export async function getServerSideProps() {
     props: {
       sushi: sushi,
       categories: categories
-    }
+    },
+    revalidate: 60,
   }
 }
 

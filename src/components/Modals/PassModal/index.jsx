@@ -68,7 +68,7 @@ const PassModal = ({closeFn, open = false, state}) => {
                   type="password"
                 />
                 <Styles.SubmitButton type="submit"
-                                     active={Object.keys(errors).length === 0 && Object.keys(touched).length !== 0}>
+                                     active={Object.keys(errors).length === 0}>
                   Підтвердити
                 </Styles.SubmitButton>
               </Styles.AuthForm>

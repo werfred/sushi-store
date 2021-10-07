@@ -21,7 +21,7 @@ const SingleOrder = ({singleOrder}) => {
 
         <Styles.OrderProductImages>
           {singleOrder.order.map(item => (
-            <img key={item.id} src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`} alt={'product image'} />
+            <img key={item.id} src={`${item.image}`} alt={'product image'} />
           ))}
         </Styles.OrderProductImages>
 
