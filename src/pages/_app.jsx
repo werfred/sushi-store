@@ -5,14 +5,29 @@ import 'react-toastify/dist/ReactToastify.css'
 import {PersistGate} from 'redux-persist/integration/react'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
+import {useRouter} from 'next/router'
 
 import {GlobalStyles} from 'constants/globalStyles'
 import Loader from '../components/Loader'
 import {persistor, setCartAmountAction, setCartPriceAction, setUserDataAction, store} from 'store'
 import {useRequest} from 'hooks/request'
+import * as ga from 'helper/googleAnalytics'
 
 
 function MyApp({Component, pageProps}) {
+  const router = useRouter()
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      ga.pageView(url)
+    }
+    router.events.on('routeChangeComplete', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
+
   return (
     <Provider store={store}>
       <PersistGate loading={<Loader />} persistor={persistor}>

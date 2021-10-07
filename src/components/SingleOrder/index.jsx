@@ -45,7 +45,7 @@ const SingleOrder = ({singleOrder}) => {
             <Styles.SingleProduct key={item.id}>
               <Styles.ProductDescription>
                 <Styles.ProductImage>
-                  <img key={item.id} src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`} alt={'product image'} />
+                  <img key={item.id} src={`${item.image}`} alt={'product image'} />
                 </Styles.ProductImage>
 
                 <Styles.ProductInfo>
