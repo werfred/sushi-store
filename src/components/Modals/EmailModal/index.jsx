@@ -29,7 +29,9 @@ const EmailModal = ({closeFn, open = false, state}) => {
     const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/reset/send-mail/`, 'POST', email)
     if (response.status === 200) {
       dispatch(setCurrentModalAction(''))
-      toast.success('Інструкція по зміні пароля була відправлена на вказану пошту', {theme: 'colored'})
+      toast.info('Інструкція по зміні пароля була відправлена на вказану пошту', {theme: 'colored'})
+    } else if (response.status === 204) {
+      toast.info('Користувача з таким email не було зареєстровано', {theme: 'colored'})
     }
   }
 

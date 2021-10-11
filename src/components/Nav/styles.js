@@ -114,6 +114,9 @@ export const GoogleButton = styled.span`
   &:active {
     transform: translateY(2px);
   }
+  ${MEDIA_QUERIES.sm} {
+    padding: 6px 10px;
+  }
 `
 export const AuthContainer = styled.div`
   display: flex;
@@ -136,7 +139,11 @@ export const MenuContainer = styled.div`
 export const LoginBtn = styled(Button)`
   text-align: center;
   margin-top: 6px;
+  ${MEDIA_QUERIES.sm} {
+    padding: 10px 20px;
+  }
 `
+
 export const LogoutBtn = styled(LoginBtn)`
   align-self: center;
 `

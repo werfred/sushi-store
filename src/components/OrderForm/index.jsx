@@ -56,9 +56,17 @@ const OrderForm = () => {
       })
     }
     if (response.status === 201) {
-      toast.success('Замовлення додано у чергу', {theme: 'colored'})
+      toast.success('Замовлення успішно додано у чергу')
       await router.push(`/account/orders`)
       dispatch(clearProductsCartAction())
+    }
+  }
+
+  const showWarning = (errors, touched) => {
+    if (Object.keys(errors).length !== 0 ||
+      (Object.keys(errors).length === 0 && Object.keys(touched).length === 0)
+    ) {
+      toast.warning('Виділені поля повинні бути заповнені!')
     }
   }
 
@@ -199,11 +207,11 @@ const OrderForm = () => {
                   )}
                 </Styles.Fields>
               </Styles.PaymentWay>
-
               <Styles.Buttons>
                 <Button onClick={() => router.push('/')} active={false} type="submit">← Назад на головну</Button>
                 <Styles.SubmitButton
-                  active={Object.keys(errors).length === 0}
+                  onClick={() => showWarning(errors, touched)}
+                  active={Object.keys(errors).length === 0 && Object.keys(touched).length !== 0}
                   type="submit">
                   Оформити замовлення
                 </Styles.SubmitButton>

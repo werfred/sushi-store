@@ -37,7 +37,7 @@ const OrdersPage = () => {
       setOrders(await ordersResponse.json())
     }
     if (ordersResponse.status === 204) {
-      toast.info('У вас немає зроблених замовлень!', {theme: 'colored'})
+      toast.info('У вас немає зроблених замовлень!')
       localStorage.removeItem('uuid')
     }
   }

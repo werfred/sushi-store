@@ -24,8 +24,9 @@ const ConfirmationPage = ({status}) => {
             ) : (
               <>
                 <Denied />
-                <Typography size={5} fontWeight={600}>Аккаунт не підтверджено, використовуйте посилання, яке було
-                  надіслано на email</Typography>
+                <Typography size={5} fontWeight={600}>
+                  Аккаунт не було підтверджено, це посилання більше не є дійсним
+                </Typography>
               </>
             )}
           </BaseContainer>

@@ -28,7 +28,7 @@ export const ModalWindow = styled.div`
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
   width: 100%;
   max-width: 520px;
-  padding: 48px;
+  padding: 36px;
   border-radius: 6px;
   position: fixed;
   left: 50%;

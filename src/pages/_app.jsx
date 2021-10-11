@@ -35,7 +35,7 @@ function MyApp({Component, pageProps}) {
         <Loader />
         <General />
         <Component {...pageProps} />
-        <ToastContainer limit={3} pauseOnHover={false} autoClose={3000} />
+        <ToastContainer limit={2} pauseOnHover={false} autoClose={3000} />
       </PersistGate>
     </Provider>
   )
@@ -57,16 +57,10 @@ function General() {
       dispatch(setCartPriceAction(cartPrice))
 
       if (cartItemsAmount < cartAmount) {
-        toast.success('Товар додано до кошика!', {
-          theme: 'colored',
-          position: 'bottom-right'
-        })
+        toast.success('Товар додано до кошика!', {position: 'top-left'})
       }
       if (cartItemsAmount > cartAmount) {
-        toast.info('Товар прибрано з кошика!', {
-          theme: 'colored',
-          position: 'bottom-right'
-        })
+        toast.info('Товар прибрано з кошика!', {position: 'top-left'})
       }
     } else {
       dispatch(setCartAmountAction(0))
