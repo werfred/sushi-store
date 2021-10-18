@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import {defaultTransition} from 'constants/globalStyles'
+import {MEDIA_QUERIES} from 'constants/mediaQueriesList'
 
 
 export const Sorting = styled.div`
@@ -38,6 +39,11 @@ export const SortingContainer = styled.div`
 
   transition: opacity 0.2s;
   ${defaultTransition};
+  
+  ${MEDIA_QUERIES.xl} {
+    right: unset;
+    left: 0;
+  }
 `
 
 export const SortingItem = styled.div`

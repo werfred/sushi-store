@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import {useRouter} from 'next/router'
+import {useSelector} from 'react-redux'
 
 import * as Styles from './styles'
 import Typography from '../Typography'
@@ -8,10 +10,11 @@ import removeFromCart from '../../helper/removeFromCart'
 
 
 const CartItem = ({singleSushi}) => {
+  const router = useRouter()
+  const translation = useSelector(state => state.currentTranslation)
+
   const addItemToCart = () => addToCart(singleSushi)
-
   const removeItemFromCart = () => removeFromCart(singleSushi)
-
   const removeWholeItemFromCart = () => removeFromCart(singleSushi, 0)
 
   return (
@@ -25,10 +28,10 @@ const CartItem = ({singleSushi}) => {
             height={96}
           />
           <Styles.Info>
-            <Typography size={5} fontWeight={600}>{singleSushi.name}</Typography>
+            <Typography size={5} fontWeight={600}>{singleSushi.name[router.locale]}</Typography>
             <div>
-              <Typography textColor={'#F3A229'} fontWeight={600}>{singleSushi.quantity} г</Typography>
-              <Typography lineHeight={1.5}> - {singleSushi.description}</Typography>
+              <Typography textColor={'#F3A229'} fontWeight={600}>{singleSushi.quantity} {translation.sushi.g}</Typography>
+              <Typography lineHeight={1.5}> - {singleSushi.description[router.locale]}</Typography>
             </div>
           </Styles.Info>
         </Styles.Description>
@@ -49,7 +52,7 @@ const CartItem = ({singleSushi}) => {
       </Styles.Amount>
 
       <Styles.ItemPrice>
-        <Typography fontWeight={600} size={5}>{singleSushi.price * singleSushi.amount} грн</Typography>
+        <Typography fontWeight={600} size={5}>{singleSushi.price * singleSushi.amount} {translation.sushi.grn}</Typography>
       </Styles.ItemPrice>
 
 

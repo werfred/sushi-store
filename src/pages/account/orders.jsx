@@ -11,7 +11,6 @@ import Button from 'components/Button'
 import SingleOrder from 'components/SingleOrder'
 import Heading from 'components/Heading'
 import {useRequest} from 'hooks/request'
-import {toast} from 'react-toastify'
 
 import EmptyOrders from '../../images/empty-orders.svg'
 
@@ -19,32 +18,31 @@ import EmptyOrders from '../../images/empty-orders.svg'
 const OrdersPage = () => {
   const router = useRouter()
   const [orders, setOrders] = useState([])
+
+  const translation = useSelector(state => state.currentTranslation)
   const token = useSelector(state => state.token)
 
   const {request} = useRequest()
 
-
-  const getOrders = async () => {
-    let ordersResponse
-    if (!token) {
-      ordersResponse = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${localStorage.getItem('uuid')}`)
-    } else {
-      ordersResponse = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/`, 'GET', null, {
-        'Authorization': `Bearer ${token}`
-      })
-    }
-    if (ordersResponse.status === 200) {
-      setOrders(await ordersResponse.json())
-    }
-    if (ordersResponse.status === 204) {
-      toast.info('У вас немає зроблених замовлень!')
-      localStorage.removeItem('uuid')
-    }
-  }
-
   useEffect(() => {
-    getOrders()
-  }, [token])
+    const getOrders = async () => {
+      let ordersResponse
+      if (!token) {
+        ordersResponse = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${localStorage.getItem('uuid')}`)
+      } else {
+        ordersResponse = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/`, 'GET', null, {
+          'Authorization': `Bearer ${token}`
+        })
+      }
+      if (ordersResponse.status === 200) {
+        setOrders(await ordersResponse.json())
+      }
+      if (ordersResponse.status === 204) {
+        localStorage.removeItem('uuid')
+      }
+    }
+    getOrders().then()
+  }, [request, token])
 
   return (
     <>
@@ -54,7 +52,7 @@ const OrdersPage = () => {
           <BaseContainer>
             {orders.length > 0 ? (
               <Styles.OrdersContainer>
-                <Heading>Ваша історія замовлень</Heading>
+                <Heading>{translation.ordersPage.yourOrdersHistory}</Heading>
                 <Styles.Orders>
                   {orders.map(order => (
                     <SingleOrder
@@ -68,12 +66,17 @@ const OrdersPage = () => {
               <Styles.EmptyOrdersContainer>
                 <EmptyOrders />
                 <Styles.EmptyInfo>
-                  <Typography size={4} fontWeight={400}>Поки що ви не зробили жодного замовлення, це потрібно терміново
-                    виправляти.</Typography>
-                  <Typography size={5} fontWeight={500}>Переходьте на головну сторінку та змовляйте найсмачніші
-                    суші!</Typography>
-                  <Button onClick={() => router.push('/')}><Typography textColor={'#fff'} fontWeight={500} size={5}>На
-                    головну</Typography></Button>
+                  <Typography size={4} fontWeight={400}>
+                    {translation.ordersPage.noOrdersYet}
+                  </Typography>
+                  <Typography size={5} fontWeight={500}>
+                    {translation.ordersPage.goToHomePageAndMakeOrder}
+                  </Typography>
+                  <Button onClick={() => router.push('/')}>
+                    <Typography textColor={'#fff'} fontWeight={500} size={5}>
+                      {translation.cartPage.toHomePage}
+                    </Typography>
+                  </Button>
                 </Styles.EmptyInfo>
               </Styles.EmptyOrdersContainer>
             )}

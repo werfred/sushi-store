@@ -27,6 +27,7 @@ const RegisterModal = ({closeFn, open = false, state}) => {
   const dispatch = useDispatch()
   const {request} = useRequest()
   const userData = useSelector(state => state.userData)
+  const translation = useSelector(state => state.currentTranslation)
 
   const toAnotherModal = () => {
     dispatch(setCurrentModalAction('modal-login'))
@@ -37,7 +38,7 @@ const RegisterModal = ({closeFn, open = false, state}) => {
     const {passwordConfirmation, ...sendData} = userData
     const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/register/`, 'POST', sendData)
     if (response.status === 201) {
-      toast.success('Ви успішно зареєструвалися!', {theme: 'colored'})
+      toast.success(translation.popupMessages.succRegistered, {theme: 'colored'})
       dispatch(setCurrentModalAction(''))
       const data = await response.json()
       setTokenInCookie(data.access)
@@ -47,7 +48,7 @@ const RegisterModal = ({closeFn, open = false, state}) => {
   return (
     <Styles.ModalWindow open={open} state={state}>
       <Styles.ModalHeader>
-        <Heading>Реєстрація</Heading>
+        <Heading>{translation.modals.registration}</Heading>
         <Styles.CloseBtn onClick={closeFn}>
           <CloseIcon />
         </Styles.CloseBtn>
@@ -69,7 +70,7 @@ const RegisterModal = ({closeFn, open = false, state}) => {
             return (
               <Styles.AuthForm>
                 <CommonInput
-                  label={<Typography>Ваше ім&apos;я <Typography textColor={'red'}>*</Typography></Typography>}
+                  label={<Typography>{translation.orderForm.name} <Typography textColor={'red'}>*</Typography></Typography>}
                   error={`${errors.name && touched.name}`}
                   name="name"
                 />
@@ -81,18 +82,18 @@ const RegisterModal = ({closeFn, open = false, state}) => {
                 <PhoneInput
                   name="phoneNumber"
                   error={`${errors.phoneNumber && touched.phoneNumber}`}
-                  label={<Typography>Номер Телефону <Typography textColor={'red'}>*</Typography></Typography>}
+                  label={<Typography>{translation.orderForm.phoneNumber} <Typography textColor={'red'}>*</Typography></Typography>}
                   placeholder={'+380 99-999-99-99'}
                 />
                 <Styles.Passwords>
                   <CommonInput
-                    label={<Typography>Пароль <Typography textColor={'red'}>*</Typography></Typography>}
+                    label={<Typography>{translation.modals.pass} <Typography textColor={'red'}>*</Typography></Typography>}
                     error={`${errors.password && touched.password}`}
                     name="password"
                     type="password"
                   />
                   <CommonInput
-                    label={<Typography>Повторіть пароль <Typography textColor={'red'}>*</Typography></Typography>}
+                    label={<Typography>{translation.modals.repeatPass} <Typography textColor={'red'}>*</Typography></Typography>}
                     error={`${errors.passwordConfirmation && touched.passwordConfirmation}`}
                     name="passwordConfirmation"
                     type="password"
@@ -100,7 +101,7 @@ const RegisterModal = ({closeFn, open = false, state}) => {
                 </Styles.Passwords>
                 <Styles.SubmitButton type="submit"
                                      active={Object.keys(errors).length === 0}>
-                  Зареєструватися
+                  {translation.modals.register}
                 </Styles.SubmitButton>
               </Styles.AuthForm>
             )
@@ -109,8 +110,8 @@ const RegisterModal = ({closeFn, open = false, state}) => {
       </Styles.ModalBody>
 
       <Styles.ModalFooter>
-        <Typography fontWeight={600}>У вас уже є аккаунт?
-          <Styles.AnotherButton onClick={toAnotherModal}> Увійти</Styles.AnotherButton>
+        <Typography fontWeight={600}>{translation.modals.alreadyHaveAccount}
+          <Styles.AnotherButton onClick={toAnotherModal}> {translation.modals.logIn}</Styles.AnotherButton>
         </Typography>
       </Styles.ModalFooter>
     </Styles.ModalWindow>

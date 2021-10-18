@@ -1,5 +1,5 @@
 import {useCallback, useState} from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {toast} from 'react-toastify'
 
 import {setLoadingAction} from 'store'
@@ -8,6 +8,7 @@ import {logout} from 'helper/logout'
 
 export const useRequest = () => {
   const dispatch = useDispatch()
+  const translation = useSelector(state => state.currentTranslation)
   const [error, setError] = useState(null)
 
   const request = useCallback(async (url, method = 'GET', body = null, headers = {}) => {
@@ -22,18 +23,16 @@ export const useRequest = () => {
       if (response.status === 401) {
         logout()
       } else if (response.status === 429) {
-        toast.error('Занадто багато запитів, спробуйте пізніше', {theme: 'colored'})
+        toast.error(translation.popupMessages.tooManyRequests, {theme: 'colored'})
       } else if (response.status === 409) {
-        toast.info('Користувач з таким email уже існує', {theme: 'colored'})
+        toast.info(translation.popupMessages.userAlreadyExists, {theme: 'colored'})
       } else if (response.status === 304) {
-        toast.info('Ваш пароль не змінився', {theme: 'colored'})
+        toast.info(translation.popupMessages.notChanged, {theme: 'colored'})
       } else if (!response.ok) {
-        toast.error('Щось пішло не так', {theme: 'colored'})
+        toast.error(translation.popupMessages.somethingWentWrong, {theme: 'colored'})
       }
 
-      setTimeout(() => {
-        dispatch(setLoadingAction(false))
-      }, 500)
+      dispatch(setLoadingAction(false))
       return response
 
     } catch (error) {
@@ -41,7 +40,12 @@ export const useRequest = () => {
       setError(error.message)
       throw error
     }
-  }, [])
+  }, [dispatch,
+    translation.popupMessages.notChanged,
+    translation.popupMessages.somethingWentWrong,
+    translation.popupMessages.tooManyRequests,
+    translation.popupMessages.userAlreadyExists
+  ])
 
   return {request, error}
 }

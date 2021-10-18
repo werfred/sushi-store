@@ -21,6 +21,7 @@ const PersonalDataForm = () => {
   const {request} = useRequest()
   const userData = useSelector(state => state.userData)
   const token = useSelector(state => state.token)
+  const translation = useSelector(state => state.currentTranslation)
 
   const updatePersonalData = async (values) => {
     const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/`, 'PUT', values, {
@@ -29,13 +30,13 @@ const PersonalDataForm = () => {
     if (response.status === 200) {
       const data = await response.json()
       dispatch(setUserDataAction(data))
-      toast.success('Дані успішно оновлено', {theme: 'colored'})
+      toast.success(translation.popupMessages.dataUpdated, {theme: 'colored'})
     }
   }
 
   return userData && (
     <Styles.UserDataContainer>
-      <Typography tag={'h4'} fontWeight={500} size={5}>Особиста інформація</Typography>
+      <Typography tag={'h4'} fontWeight={500} size={5}>{translation.userData.personalInfo}</Typography>
       <Formik
         initialValues={{
           name: userData.name,
@@ -48,19 +49,19 @@ const PersonalDataForm = () => {
           return (
             <Styles.UserDataForm>
               <CommonInput
-                label={<Typography>Ваше ім&apos;я <Typography textColor={'red'}>*</Typography></Typography>}
+                label={<Typography>{translation.orderForm.name} <Typography textColor={'red'}>*</Typography></Typography>}
                 error={`${errors.name && touched.name}`}
                 name="name"
               />
               <PhoneInput
                 name="phoneNumber"
                 error={`${errors.phoneNumber && touched.phoneNumber}`}
-                label={<Typography>Номер Телефону <Typography textColor={'red'}>*</Typography></Typography>}
+                label={<Typography>{translation.orderForm.phoneNumber} <Typography textColor={'red'}>*</Typography></Typography>}
                 placeholder={'+380 99-999-99-99'}
               />
               <Styles.SubmitButton type="submit"
                                    active={Object.keys(errors).length === 0}>
-                Зберегти
+                {translation.userData.saveEntered}
               </Styles.SubmitButton>
             </Styles.UserDataForm>
           )

@@ -1,5 +1,5 @@
 import {Formik} from 'formik'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import * as Yup from 'yup'
 import {toast} from 'react-toastify'
 
@@ -20,6 +20,7 @@ const EmailSchema = Yup.object().shape({
 const EmailModal = ({closeFn, open = false, state}) => {
   const dispatch = useDispatch()
   const {request} = useRequest()
+  const translation = useSelector(state => state.currentTranslation)
 
   const toAnotherModal = () => {
     dispatch(setCurrentModalAction('modal-login'))
@@ -29,16 +30,16 @@ const EmailModal = ({closeFn, open = false, state}) => {
     const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/reset/send-mail/`, 'POST', email)
     if (response.status === 200) {
       dispatch(setCurrentModalAction(''))
-      toast.info('Інструкція по зміні пароля була відправлена на вказану пошту', {theme: 'colored'})
+      toast.info(translation.popupMessages.restorePasswordInstructionSent, {theme: 'colored'})
     } else if (response.status === 204) {
-      toast.info('Користувача з таким email не було зареєстровано', {theme: 'colored'})
+      toast.info(translation.popupMessages.noUserWithSuchEmail, {theme: 'colored'})
     }
   }
 
   return (
     <Styles.ModalWindow open={open} state={state}>
       <Styles.ModalHeader>
-        <Heading>Ваш email</Heading>
+        <Heading>{translation.modals.yourEmail}</Heading>
         <Styles.CloseBtn onClick={closeFn}>
           <CloseIcon />
         </Styles.CloseBtn>
@@ -62,7 +63,7 @@ const EmailModal = ({closeFn, open = false, state}) => {
                 />
                 <Styles.SubmitButton type="submit"
                                      active={Object.keys(errors).length === 0}>
-                  Відновити пароль
+                  {translation.modals.resetPass}
                 </Styles.SubmitButton>
               </Styles.AuthForm>
             )
@@ -71,7 +72,7 @@ const EmailModal = ({closeFn, open = false, state}) => {
       </Styles.ModalBody>
 
       <Styles.ModalFooter>
-        <Styles.AnotherButton onClick={toAnotherModal}> Увійти</Styles.AnotherButton>
+        <Styles.AnotherButton onClick={toAnotherModal}> {translation.modals.logIn}</Styles.AnotherButton>
       </Styles.ModalFooter>
     </Styles.ModalWindow>
   )

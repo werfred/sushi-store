@@ -22,6 +22,7 @@ const AddressDataForm = () => {
   const {request} = useRequest()
   const userData = useSelector(state => state.userData)
   const token = useSelector(state => state.token)
+  const translation = useSelector(state => state.currentTranslation)
 
   const updateAddress = async (values) => {
     const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/`, 'PUT', {addresses: [values]}, {
@@ -30,13 +31,13 @@ const AddressDataForm = () => {
     if (response.status === 200) {
       const data = await response.json()
       dispatch(setUserDataAction(data))
-      toast.success('Дані успішно оновлено', {theme: 'colored'})
+      toast.success(translation.popupMessages.dataUpdated, {theme: 'colored'})
     }
   }
 
   return userData && (
     <Styles.UserDataContainer>
-      <Typography tag={'h4'} fontWeight={500} size={5}>Адреса</Typography>
+      <Typography tag={'h4'} fontWeight={500} size={5}>{translation.userData.address}</Typography>
       <Formik
         initialValues={{
           streetName: userData.addresses[0]?.streetName || '',
@@ -51,32 +52,31 @@ const AddressDataForm = () => {
           return (
             <Styles.UserDataForm>
               <CommonInput
-                label={<Typography>Назва вулиці <Typography textColor={'red'}>*</Typography></Typography>}
+                label={<Typography>{translation.orderForm.streetName} <Typography textColor={'red'}>*</Typography></Typography>}
                 error={`${errors.streetName && touched.streetName}`}
                 name={'streetName'}
-                placeholder={'Зигіна'}
               />
               <CommonInput
-                label={<Typography>Номер будинку <Typography textColor={'red'}>*</Typography></Typography>}
+                label={<Typography>{translation.orderForm.houseNumber} <Typography textColor={'red'}>*</Typography></Typography>}
                 error={`${errors.houseNumber && touched.houseNumber}`}
                 name={'houseNumber'}
                 placeholder={'431'}
               />
               <CommonInput
-                label={<Typography>Номер під&apos;їзду</Typography>}
+                label={<Typography>{translation.orderForm.entranceNumber}</Typography>}
                 error={`${errors.entranceNumber && touched.entranceNumber}`}
                 name={'entranceNumber'}
                 placeholder={'4'}
               />
               <CommonInput
-                label={<Typography>Номер квартири</Typography>}
+                label={<Typography>{translation.orderForm.apartmentsNumber}</Typography>}
                 error={`${errors.apartmentsNumber && touched.apartmentsNumber}`}
                 name={'apartmentsNumber'}
                 placeholder={'76'}
               />
               <Styles.SubmitButton type="submit"
                                    active={Object.keys(errors).length === 0}>
-                Зберегти адресу
+                {translation.userData.saveEntered}
               </Styles.SubmitButton>
             </Styles.UserDataForm>
           )

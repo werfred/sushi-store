@@ -28,6 +28,7 @@ const Nav = () => {
   const currentModal = useSelector(state => state.currentModal)
   const userData = useSelector(state => state.userData)
   const token = useSelector(state => state.token)
+  const translation = useSelector(state => state.currentTranslation)
 
   const [open, setOpen] = useState(false)
   const accountContainer = useRef('')
@@ -79,13 +80,13 @@ const Nav = () => {
           <Styles.Location href="https://www.google.com/maps/search/?api=1&query=49.58619434%2C34.55096394"
                            rel="noreferrer" target="_blank">
             <Location />
-            <Typography size={2}>м. Полтава, вул. Європейська 10. <br /> Працюємо с 11:00 до 23:00</Typography>
+            <Typography size={2}>{translation.nav.workingPlace} <br /> {translation.nav.workingTime}</Typography>
           </Styles.Location>
 
           <Styles.Account>
             <Styles.AccountTitle onClick={() => setOpen(true)}>
               <Account />
-              <Typography>{userData?.name || 'Особистий кабінет'}</Typography>
+              <Typography>{userData?.name || translation.nav.personalAccount}</Typography>
             </Styles.AccountTitle>
 
             <Transition
@@ -97,25 +98,25 @@ const Nav = () => {
                 <Styles.AccountContainer state={state} ref={accountContainer}>
                   <Styles.AccountTitle onClick={() => setOpen(false)}>
                     <Account />
-                    <Typography>{userData?.name || 'Особистий кабінет'}</Typography>
+                    <Typography>{userData?.name || translation.nav.personalAccount}</Typography>
                   </Styles.AccountTitle>
 
                   {userData && token ? (
                     <Styles.MenuContainer>
                       <Link href={'/account'}>
-                        <a><Typography size={4} fontWeight={500}>Персональні дані</Typography></a>
+                        <a><Typography size={4} fontWeight={500}>{translation.nav.personalInfo}</Typography></a>
                       </Link>
                       <Link href={'/account/orders'}>
-                        <a><Typography size={4} fontWeight={500}>Історія замовлень</Typography></a>
+                        <a><Typography size={4} fontWeight={500}>{translation.nav.orderHistory}</Typography></a>
                       </Link>
                       <Styles.LogoutBtn active={false} onClick={logout}>
-                        Вийти
+                        {translation.nav.logout}
                       </Styles.LogoutBtn>
                     </Styles.MenuContainer>
                   ) : (
                     <>
                       <Styles.LoginWithGoogleContainer>
-                        <Typography>Увійти за допомогою</Typography>
+                        <Typography>{translation.nav.loginWith}</Typography>
                         <GoogleLogin
                           clientId={process.env.NEXT_PUBLIC_GOOGLE_ID}
                           render={renderProps => (
@@ -134,17 +135,17 @@ const Nav = () => {
                       </Styles.LoginWithGoogleContainer>
 
                       <Styles.AuthContainer>
-                        <Typography>Або увійдіть на сайті</Typography>
+                        <Typography>{translation.nav.orLoginOnSite}</Typography>
                         <Styles.LoginBtn active={false}
                                          onClick={() => openModal('modal-login')}
                         >
-                          Увійти
+                          {translation.nav.login}
                         </Styles.LoginBtn>
                         <Styles.RegisterBtn onClick={() => openModal('modal-register')}
                                             fontWeight={600} textColor={'var(--color-primary)'}
                                             size={5}
                         >
-                          Зареєструватися
+                          {translation.nav.register}
                         </Styles.RegisterBtn>
                       </Styles.AuthContainer>
                     </>

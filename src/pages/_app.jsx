@@ -8,9 +8,17 @@ import 'slick-carousel/slick/slick.css'
 import {useRouter} from 'next/router'
 
 import {GlobalStyles} from 'constants/globalStyles'
-import Loader from '../components/Loader'
-import {persistor, setCartAmountAction, setCartPriceAction, setUserDataAction, store} from 'store'
+import {
+  persistor,
+  setCartAmountAction,
+  setCartPriceAction,
+  setCurrentTranslationAction,
+  setUserDataAction,
+  store
+} from 'store'
 import {useRequest} from 'hooks/request'
+import Loader from '../components/Loader'
+import Translations from 'components/Translations'
 import * as ga from 'helper/googleAnalytics'
 
 
@@ -34,6 +42,7 @@ function MyApp({Component, pageProps}) {
         <GlobalStyles />
         <Loader />
         <General />
+        <Translations />
         <Component {...pageProps} />
         <ToastContainer limit={2} pauseOnHover={false} autoClose={3000} />
       </PersistGate>
@@ -42,10 +51,14 @@ function MyApp({Component, pageProps}) {
 }
 
 function General() {
+  const router = useRouter()
   const dispatch = useDispatch()
+
   const cartProducts = useSelector(state => state.cartProducts)
   const cartItemsAmount = useSelector(state => state.cartItemsAmount)
   const token = useSelector(state => state.token)
+  const translations = useSelector(state => state.translations)
+  const translation = useSelector(state => state.currentTranslation)
 
   const {request} = useRequest()
 
@@ -57,29 +70,33 @@ function General() {
       dispatch(setCartPriceAction(cartPrice))
 
       if (cartItemsAmount < cartAmount) {
-        toast.success('Товар додано до кошика!', {position: 'top-left'})
+        toast.success(translation.popupMessages.addedToCart, {position: 'top-left'})
       }
       if (cartItemsAmount > cartAmount) {
-        toast.info('Товар прибрано з кошика!', {position: 'top-left'})
+        toast.info(translation.popupMessages.deletedFromCart, {position: 'top-left'})
       }
     } else {
       dispatch(setCartAmountAction(0))
       dispatch(setCartPriceAction(0))
     }
-  }, [cartProducts])
-
-  const getUserData = async () => {
-    const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/`, 'GET', null, {
-      'Authorization': `Bearer ${token}`
-    })
-    dispatch(setUserDataAction(await response.json()))
-  }
+  }, [cartItemsAmount, cartProducts, dispatch, translation.popupMessages.addedToCart, translation.popupMessages.deletedFromCart])
 
   useEffect(() => {
-    if (token) {
-      getUserData()
+    const getUserData = async () => {
+      const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/`, 'GET', null, {
+        'Authorization': `Bearer ${token}`
+      })
+      dispatch(setUserDataAction(await response.json()))
     }
-  }, [token])
+    if (token) {
+      getUserData().then()
+    }
+  }, [dispatch, request, token])
+
+  useEffect(() => {
+    const currentTranslation = translations.filter(translation => translation.locale === router.locale)
+    dispatch(setCurrentTranslationAction(currentTranslation[0]))
+  }, [dispatch, router.locale, translations])
 
   return null
 }

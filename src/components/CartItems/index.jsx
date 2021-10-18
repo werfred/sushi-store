@@ -12,6 +12,7 @@ import TrashCan from '../../images/trash-can.svg'
 const CartItems = () => {
   const dispatch = useDispatch()
 
+  const translation = useSelector(state => state.currentTranslation)
   const cartProducts = useSelector(state => state.cartProducts)
   const cartItemsAmount = useSelector(state => state.cartItemsAmount)
   const cartPrice = useSelector(state => state.cartPrice)
@@ -20,17 +21,16 @@ const CartItems = () => {
     dispatch(clearProductsCartAction())
   }
 
-
   return (
     <Styles.CartItems>
       <Styles.TopRow>
         <div>
           <Cart />
-          <Heading>Кошик</Heading>
+          <Heading>{translation.cartItems.cart}</Heading>
         </div>
         <Styles.EmptyCart onClick={clearCart}>
           <TrashCan />
-          <Typography size={4} textColor={'var(--color-text)'}>Очистити кошик</Typography>
+          <Typography size={4} textColor={'var(--color-text)'}>{translation.cartItems.clearCart}</Typography>
         </Styles.EmptyCart>
       </Styles.TopRow>
 
@@ -45,15 +45,20 @@ const CartItems = () => {
 
       <Styles.BottomRow>
         <div>
-          <Typography size={5} fontWeight={500}>Усього сетів ролів:</Typography>
-          <Typography size={5} fontWeight={500} textColor={'var(--color-primary)'}> {cartItemsAmount} шт.</Typography>
+          <Typography size={5} fontWeight={500}>{translation.cartItems.totalAmount}: </Typography>
+          <Typography size={5} fontWeight={500}
+                      textColor={'var(--color-primary)'}>
+            {cartItemsAmount} {translation.sushi.amount}
+          </Typography>
         </div>
         <div>
-          <Typography size={5} fontWeight={500}>Сума замовлення:</Typography>
-          <Typography size={5} fontWeight={500} textColor={'var(--color-primary)'}> {cartPrice} грн</Typography>
+          <Typography size={5} fontWeight={500}>{translation.cartItems.totalPrice}: </Typography>
+          <Typography size={5} fontWeight={500}
+                      textColor={'var(--color-primary)'}>
+            {cartPrice}  {translation.sushi.grn}
+          </Typography>
         </div>
       </Styles.BottomRow>
-
     </Styles.CartItems>
   )
 }

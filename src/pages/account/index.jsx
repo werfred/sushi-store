@@ -14,13 +14,14 @@ import PasswordDataForm from 'components/UserData/Password'
 
 function AccountPage() {
   const router = useRouter()
+  const translation = useSelector(state => state.currentTranslation)
   const token = useSelector(state => state.token)
 
   useEffect(() => {
     if (!token) {
       router.push('/account/orders')
     }
-  }, [])
+  }, [router, token])
 
   return (
     <>
@@ -28,7 +29,7 @@ function AccountPage() {
       <Layout>
         <Styles.AccountContainer>
           <BaseContainer>
-            <Heading>Персональні дані</Heading>
+            <Heading>{translation.accountPage.personalData}</Heading>
             <Styles.Forms>
               <PersonalDataForm />
               <AddressDataForm />

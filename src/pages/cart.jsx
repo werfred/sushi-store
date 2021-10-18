@@ -18,6 +18,7 @@ const CartPage = () => {
   const router = useRouter()
 
   const cartProducts = useSelector(state => state.cartProducts)
+  const translation = useSelector(state => state.currentTranslation)
 
   const backToHome = () => {
     router.push('/')
@@ -32,16 +33,18 @@ const CartPage = () => {
             {cartProducts.length === 0 ? (
               <Styles.EmptyCartContainer>
                 <Styles.Info>
-                  <Typography size={6} lineHeight={2} fontWeight={700}>Ваш кошик пустий</Typography>
-                  <Typography size={4} lineHeight={1.5}>Найімовірніше, ви ще не додали в кошик жодної порції
-                    ролів.</Typography>
-                  <Typography size={4} lineHeight={1.5}>Для того, щоб зробити замовлення, перейдіть на головну
-                    сторінку.</Typography>
+                  <Typography size={6} lineHeight={2} fontWeight={700}>{translation.cartPage.yourCartIsEmpty}</Typography>
+                  <Typography size={4} lineHeight={1.5}>
+                    {translation.cartPage.notAdded}
+                  </Typography>
+                  <Typography size={4} lineHeight={1.5}>
+                    {translation.cartPage.goToHomePage}
+                  </Typography>
                 </Styles.Info>
                 <EmptyCart />
                 <Styles.ButtonsContainer>
-                  <Button active={false} onClick={backToHome}>← Назад на головну</Button>
-                  <Button onClick={() => router.push(`/account/orders`)}>На сторінку замовлень</Button>
+                  <Button active={false} onClick={backToHome}>← {translation.cartPage.toHomePage}</Button>
+                  <Button onClick={() => router.push(`/account/orders`)}>{translation.cartPage.toOrdersPage}</Button>
                 </Styles.ButtonsContainer>
               </Styles.EmptyCartContainer>
             ) : (

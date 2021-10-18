@@ -1,13 +1,14 @@
 import {useRouter} from 'next/router'
-import {useDispatch} from 'react-redux'
-import {toast} from 'react-toastify'
+import {useDispatch, useSelector} from 'react-redux'
 
+import {toast} from 'react-toastify'
 import {setCurrentModalAction, setResetTokenAction} from 'store'
 
 
 const ResetPage = ({token, status}) => {
   const router = useRouter()
   const dispatch = useDispatch()
+  const translation = useSelector(state => state.currentTranslation)
 
   if (status === 200) {
     dispatch(setResetTokenAction(token))
@@ -15,7 +16,7 @@ const ResetPage = ({token, status}) => {
     dispatch(setCurrentModalAction('modal-pass'))
   } else {
     router.push('/')
-    toast.error('Щось пішло не так', {theme: 'colored'})
+    toast.error(translation.popupMessages.somethingWentWrong, {theme: 'colored'})
   }
 
   return null

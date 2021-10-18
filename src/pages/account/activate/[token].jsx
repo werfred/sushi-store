@@ -1,14 +1,18 @@
-import * as Styles from '../../../styles/confirmationStyles'
-import Seo from '../../../components/Seo'
-import Layout from '../../../layout'
-import BaseContainer from '../../../components/BaseContainer'
-import Typography from '../../../components/Typography'
+import {useSelector} from 'react-redux'
+
+import * as Styles from 'styles/confirmationStyles'
+import Seo from 'components/Seo'
+import Layout from 'layout'
+import BaseContainer from 'components/BaseContainer'
+import Typography from 'components/Typography'
 
 import Confirmed from '../../../images/confirmed.svg'
 import Denied from '../../../images/access-denied.svg'
 
 
 const ConfirmationPage = ({status}) => {
+  const translation = useSelector(state => state.currentTranslation)
+
   return (
     <>
       <Seo />
@@ -18,14 +22,14 @@ const ConfirmationPage = ({status}) => {
             {status === 200 ? (
               <>
                 <Confirmed />
-                <Typography size={5} fontWeight={600}>Аккаунт успішно підтверджено</Typography>
-                <Typography size={5} fontWeight={600}>Можете закрити це вікно</Typography>
+                <Typography size={5} fontWeight={600}>{translation.confirmationPage.accountConfirmed}</Typography>
+                <Typography size={5} fontWeight={600}>{translation.confirmationPage.canCloseWindow}</Typography>
               </>
             ) : (
               <>
                 <Denied />
                 <Typography size={5} fontWeight={600}>
-                  Аккаунт не було підтверджено, це посилання більше не є дійсним
+                  {translation.confirmationPage.accountNotConfirmed}
                 </Typography>
               </>
             )}

@@ -22,6 +22,7 @@ const PassModal = ({closeFn, open = false, state}) => {
   const dispatch = useDispatch()
   const {request} = useRequest()
   const resetToken = useSelector(state => state.resetToken)
+  const translation = useSelector(state => state.currentTranslation)
 
   const changePass = async (pass) => {
     const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/reset/password/${resetToken}`,
@@ -37,7 +38,7 @@ const PassModal = ({closeFn, open = false, state}) => {
   return (
     <Styles.ModalWindow open={open} state={state}>
       <Styles.ModalHeader>
-        <Heading>Введіть новий пароль</Heading>
+        <Heading>{translation.modals.enterNewPass}</Heading>
         <Styles.CloseBtn onClick={closeFn}>
           <CloseIcon />
         </Styles.CloseBtn>
@@ -56,20 +57,20 @@ const PassModal = ({closeFn, open = false, state}) => {
             return (
               <Styles.AuthForm>
                 <CommonInput
-                  label={<Typography>Пароль <Typography textColor={'red'}>*</Typography></Typography>}
+                  label={<Typography>{translation.modals.pass} <Typography textColor={'red'}>*</Typography></Typography>}
                   error={`${errors.password && touched.password}`}
                   name="password"
                   type="password"
                 />
                 <CommonInput
-                  label={<Typography>Повторіть пароль <Typography textColor={'red'}>*</Typography></Typography>}
+                  label={<Typography>{translation.modals.repeatPass} <Typography textColor={'red'}>*</Typography></Typography>}
                   error={`${errors.passwordConfirmation && touched.passwordConfirmation}`}
                   name="passwordConfirmation"
                   type="password"
                 />
                 <Styles.SubmitButton type="submit"
                                      active={Object.keys(errors).length === 0}>
-                  Підтвердити
+                  {translation.modals.confirm}
                 </Styles.SubmitButton>
               </Styles.AuthForm>
             )

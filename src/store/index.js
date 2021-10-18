@@ -4,11 +4,13 @@ import {persistStore, persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import Cookies from 'js-cookie'
 
+import {translations} from 'components/Translations/constants/translations'
+
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['token', 'userData', 'resetToken']
+  blacklist: ['token', 'userData', 'resetToken', 'translations', 'currentTranslation']
 }
 
 const initialState = {
@@ -23,7 +25,9 @@ const initialState = {
   filteredProducts: [],
   filteredProductsByCategory: [],
   currentCategory: 'All',
-  currentModal: ''
+  currentModal: '',
+  translations: translations,
+  currentTranslation: translations.filter(t => t.locale === 'uk')[0]
 }
 
 const SET_LOADING = 'SET_LOADING'
@@ -39,6 +43,9 @@ const SET_PRODUCT_TO_CART = 'SET_PRODUCT_TO_CART'
 const CLEAR_PRODUCTS_CART = 'CLEAR_PRODUCTS_CART'
 const SET_CART_PRICE = 'SET_CART_PRICE'
 const SET_CART_AMOUNT = 'SET_CART_AMOUNT'
+
+const SET_TRANSLATIONS = 'SET_TRANSLATIONS'
+const SET_CURRENT_TRANSLATION = 'SET_CURRENT_TRANSLATION'
 
 
 const reducer = (state = initialState, action) => {
@@ -93,6 +100,12 @@ const reducer = (state = initialState, action) => {
 
     case SET_CART_PRICE:
       return {...state, cartPrice: action.payload}
+
+    case SET_TRANSLATIONS:
+      return {...state, translations: [...action.payload]}
+
+    case SET_CURRENT_TRANSLATION:
+      return {...state, currentTranslation: action.payload}
     default:
       return state
   }
@@ -111,6 +124,9 @@ export const setProductsAction = (payload) => ({type: SET_PRODUCTS, payload})
 export const setFilteredProductsAction = (payload) => ({type: SET_FILTERED_PRODUCTS, payload})
 export const setFilteredProductsByCategoryAction = (payload) => ({type: SET_FILTERED_PRODUCTS_BY_CATEGORY, payload})
 export const setCurrentCategoryAction = (payload) => ({type: SET_CURRENT_CATEGORY, payload})
+
+export const setCurrentTranslationAction = (payload) => ({type: SET_CURRENT_TRANSLATION, payload})
+export const setTranslationsAction = (payload) => ({type: SET_TRANSLATIONS, payload})
 
 const persistedReducer = persistReducer(persistConfig, reducer)
 
