@@ -28,7 +28,7 @@ const OrdersPage = () => {
     const getOrders = async () => {
       let ordersResponse
       if (!token) {
-        ordersResponse = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${localStorage.getItem('uuid')}`)
+        ordersResponse = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${localStorage.getItem('uuid')}/`)
       } else {
         ordersResponse = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/`, 'GET', null, {
           'Authorization': `Bearer ${token}`

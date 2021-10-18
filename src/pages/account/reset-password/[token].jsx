@@ -23,7 +23,7 @@ const ResetPage = ({token, status}) => {
 }
 
 export async function getServerSideProps(context) {
-  const resetResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/reset/password/${context.params.token}`)
+  const resetResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/reset/password/${context.params.token}/`)
 
   return {
     props: {

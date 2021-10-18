@@ -51,9 +51,9 @@ const OrderForm = () => {
     }
     let response
     if (!token) {
-      response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create-by-uuid`, 'POST', sendObject)
+      response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create-by-uuid/`, 'POST', sendObject)
     } else {
-      response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`, 'POST', sendObject, {
+      response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create/`, 'POST', sendObject, {
         'Authorization': `Bearer ${token}`
       })
     }

@@ -25,7 +25,7 @@ const PassModal = ({closeFn, open = false, state}) => {
   const translation = useSelector(state => state.currentTranslation)
 
   const changePass = async (pass) => {
-    const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/reset/password/${resetToken}`,
+    const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/reset/password/${resetToken}/`,
       'PUT',
       {password: pass.password}
     )

@@ -150,7 +150,7 @@ export const translations = [
       'notFound': 'Sorry, no products were found to suit your preferences',
       'changeSettings': 'Change your filter settings, or refresh the page',
       'all': 'All',
-      'rolls': 'Rolls-Royce'
+      'rolls': 'Rolls'
     },
     cartPage: {
       'yourCartIsEmpty': 'Your cart is empty',

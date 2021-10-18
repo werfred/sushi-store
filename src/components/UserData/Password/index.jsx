@@ -23,7 +23,7 @@ const PasswordDataForm = () => {
 
   const updatePasswordData = async (values) => {
     const {passwordConfirmation, ...newValues} = values
-    const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/password/update`, 'PUT', newValues, {
+    const response = await request(`${process.env.NEXT_PUBLIC_API_URL}/api/user/password/update/`, 'PUT', newValues, {
       'Authorization': `Bearer ${token}`
     })
     if (response.status === 200) {
